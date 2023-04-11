@@ -113,11 +113,11 @@ func UpdateCluster(max_results, max_pages string) map[string]interface{} {
 	return data
 }
 
-func ActivateTask(task_id string) map[string]interface{} {
+func ActivateTask(taskId string) map[string]interface{} {
 	client := http.Client{}
 
 	bodyMap := map[string]interface{}{
-		"id": "5269ba2732a95ba5ac7dacb20cd22ab8",
+		"id": taskId,
 		"object": "task",
 		"is_active": true,
 	}
@@ -127,7 +127,7 @@ func ActivateTask(task_id string) map[string]interface{} {
 		panic(err)
 	}
 
-	req, err := http.NewRequest("POST", "https://api.lobstr.io/v1/clusters/tasks/"+task_id+"/activate", 
+	req, err := http.NewRequest("POST", "https://api.lobstr.io/v1/clusters/tasks/"+taskId+"/activate", 
 		bytes.NewBuffer(body),
 	)
 
@@ -203,11 +203,11 @@ func ListRuns() map[string]interface{} {
 	return data
 }
 
-func DownloadRun(clusterId, runId string) map[string]interface{} {
+func DownloadRun(runId string) map[string]interface{} {
 	client := http.Client{}
 
 	body, err := json.Marshal(map[string]interface{}{
-		"cluster":                 clusterId,
+		"cluster":                 CLUSTER_ID,
 	})
 
 	if err != nil {
