@@ -2,8 +2,8 @@ package scrape
 
 	
 type LebonCoinGeoZone struct {
-    childs []LebonCoinGeoZone
     name string
+    childs []LebonCoinGeoZone
 }
 
 var geoZones = &LebonCoinGeoZone{
