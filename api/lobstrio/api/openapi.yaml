@@ -1,0 +1,453 @@
+openapi: 3.0.0
+info:
+  contact: {}
+  title: Lobstr
+  version: "1.0"
+servers:
+- url: https://api.lobstr.io/v1
+security:
+- apiKey: []
+tags:
+- description: ""
+  name: Misc
+paths:
+  /clusters:
+    get:
+      deprecated: false
+      operationId: Getcluster
+      parameters:
+      - description: ""
+        explode: true
+        in: query
+        name: id
+        required: true
+        schema:
+          example: 9fb56bc8d697ff45d47ad9ed332e262b
+          type: string
+        style: form
+      - description: ""
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          example: application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Get cluster
+      tags:
+      - Misc
+  /tasks:
+    post:
+      deprecated: false
+      operationId: Createtask(notadded)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+              tasks:
+              - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
+            schema:
+              $ref: '#/components/schemas/Createtask_notadded__request'
+        description: ""
+        required: true
+      responses:
+        "200":
+          description: ""
+      summary: Create task (not added)
+      tags:
+      - Misc
+  /clusters/9fb56bc8d697ff45d47ad9ed332e262b:
+    post:
+      deprecated: false
+      operationId: Updatecluster
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Leboncoin Listings Search Export
+              concurrency: 1
+              export_unique_results: true
+              no_line_breaks: true
+              to_complete: false
+              params:
+                max_date: null
+                max_results: 25
+                max_pages: 1
+                hours_back: null
+                online_shop: false
+              accounts: null
+              run_notify: on_error
+            schema:
+              $ref: '#/components/schemas/Updatecluster_request'
+        description: ""
+        required: true
+      responses:
+        "200":
+          description: ""
+      summary: Update cluster
+      tags:
+      - Misc
+  /tasks/292461f69940b3bfa9672092f6601acb/activate:
+    post:
+      deprecated: false
+      operationId: Activatetask
+      parameters:
+      - description: ""
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          example: Token 85740612a05ece90fb7bbbf7b507947ffd530cf8
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              id: 5269ba2732a95ba5ac7dacb20cd22ab8
+              object: task
+              is_active: true
+            schema:
+              $ref: '#/components/schemas/Activatetask_request'
+        description: ""
+        required: true
+      responses:
+        "200":
+          description: ""
+      security: []
+      summary: Activate task
+      tags:
+      - Misc
+  /runs:
+    get:
+      deprecated: false
+      operationId: Listruns
+      parameters:
+      - description: ""
+        explode: true
+        in: query
+        name: page
+        required: true
+        schema:
+          example: 1
+          format: int32
+          type: integer
+        style: form
+      - description: ""
+        explode: true
+        in: query
+        name: limit
+        required: true
+        schema:
+          example: 10
+          format: int32
+          type: integer
+        style: form
+      - description: ""
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          example: Token 85740612a05ece90fb7bbbf7b507947ffd530cf8
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          example: application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: ""
+      security: []
+      summary: List runs
+      tags:
+      - Misc
+    post:
+      deprecated: false
+      operationId: Runcluster
+      parameters:
+      - description: ""
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          example: Token 85740612a05ece90fb7bbbf7b507947ffd530cf8
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+            schema:
+              $ref: '#/components/schemas/Runcluster_request'
+        description: ""
+        required: true
+      responses:
+        "200":
+          description: ""
+      security: []
+      summary: Run cluster
+      tags:
+      - Misc
+  /runs/ce545f63b4fa4a6988c929dfefea243e:
+    get:
+      deprecated: false
+      operationId: Viewrun
+      parameters:
+      - description: ""
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          example: Token 85740612a05ece90fb7bbbf7b507947ffd530cf8
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          example: application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: ""
+      security: []
+      summary: View run
+      tags:
+      - Misc
+  /results/16c0e52bd30340caa107c80f8a2e21c2:
+    get:
+      deprecated: false
+      operationId: Getresult
+      parameters:
+      - description: ""
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          example: Token 85740612a05ece90fb7bbbf7b507947ffd530cf8
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          example: application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: ""
+      security: []
+      summary: Get result
+      tags:
+      - Misc
+components:
+  schemas:
+    CreatetasknotaddedRequest:
+      example:
+        cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+        tasks:
+        - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
+      properties:
+        cluster:
+          type: string
+        tasks:
+          description: ""
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+      required:
+      - cluster
+      - tasks
+      title: CreatetasknotaddedRequest
+      type: object
+    Task:
+      example:
+        url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
+      properties:
+        url:
+          type: string
+      required:
+      - url
+      title: Task
+      type: object
+    UpdateclusterRequest:
+      example:
+        name: Leboncoin Listings Search Export
+        concurrency: 1
+        export_unique_results: true
+        no_line_breaks: true
+        to_complete: false
+        params:
+          max_date: null
+          max_results: 25
+          max_pages: 1
+          hours_back: null
+          online_shop: false
+        accounts: null
+        run_notify: on_error
+      properties:
+        name:
+          type: string
+        concurrency:
+          format: int32
+          type: integer
+        export_unique_results:
+          type: boolean
+        no_line_breaks:
+          type: boolean
+        to_complete:
+          type: boolean
+        params:
+          $ref: '#/components/schemas/UpdateclusterRequest_params'
+        accounts:
+          nullable: true
+          type: string
+        run_notify:
+          type: string
+      required:
+      - accounts
+      - concurrency
+      - export_unique_results
+      - name
+      - no_line_breaks
+      - params
+      - run_notify
+      - to_complete
+      title: UpdateclusterRequest
+      type: object
+    Params:
+      example:
+        max_date: null
+        max_results: 25
+        max_pages: 1
+        hours_back: null
+        online_shop: false
+      properties:
+        max_date:
+          nullable: true
+          type: string
+        max_results:
+          format: int32
+          type: integer
+        max_pages:
+          format: int32
+          type: integer
+        hours_back:
+          nullable: true
+          type: string
+        online_shop:
+          type: boolean
+      required:
+      - hours_back
+      - max_date
+      - max_pages
+      - max_results
+      - online_shop
+      title: Params
+      type: object
+    ActivatetaskRequest:
+      example:
+        id: 5269ba2732a95ba5ac7dacb20cd22ab8
+        object: task
+        is_active: true
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        is_active:
+          type: boolean
+      required:
+      - id
+      - is_active
+      - object
+      title: ActivatetaskRequest
+      type: object
+    RunclusterRequest:
+      example:
+        cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+      properties:
+        cluster:
+          type: string
+      required:
+      - cluster
+      title: RunclusterRequest
+      type: object
+    Createtask_notadded__request:
+      allOf:
+      - $ref: '#/components/schemas/CreatetasknotaddedRequest'
+      - example:
+          cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+          tasks:
+          - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
+    Updatecluster_request:
+      allOf:
+      - $ref: '#/components/schemas/UpdateclusterRequest'
+      - example:
+          name: Leboncoin Listings Search Export
+          concurrency: 1
+          export_unique_results: true
+          no_line_breaks: true
+          to_complete: false
+          params:
+            max_date: null
+            max_results: 25
+            max_pages: 1
+            hours_back: null
+            online_shop: false
+          accounts: null
+          run_notify: on_error
+    Activatetask_request:
+      allOf:
+      - $ref: '#/components/schemas/ActivatetaskRequest'
+      - example:
+          id: 5269ba2732a95ba5ac7dacb20cd22ab8
+          object: task
+          is_active: true
+    Runcluster_request:
+      allOf:
+      - $ref: '#/components/schemas/RunclusterRequest'
+      - example:
+          cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+    UpdateclusterRequest_params:
+      allOf:
+      - $ref: '#/components/schemas/Params'
+      - {}
+  securitySchemes:
+    apiKey:
+      in: header
+      name: Authorization
+      type: apiKey

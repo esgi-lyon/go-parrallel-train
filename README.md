@@ -1,8 +1,22 @@
 # Go parrallel
 
-```
-pnpm install -g apib2swagger
-apib2swagger -i data/lobstrio.apib --open-api-3 -o data/openapi.json
+```bash
 pnpm install -g @openapitools/openapi-generator-cli
-openapi-generator-cli generate -g go -i data/openapi.json -o lobstrio-go-client --skip-validate-spec
+```
+
+```bash
+openapi-generator-cli generate -g go \
+ -i data/openapi.json -o api/lobstrio \
+ --additional-properties packageName=lobstrio \
+ --additional-properties packageVersion=latest \
+ --git-repo-id go-parrallel-train/api/lobstrio --git-user-id esgi-lyon
+
+rm -rf api/lobstrio/go.mod api/lobstrio/go.sum
+```
+
+## Run
+
+```bash
+export LOBSTRIOS_API_TOKEN=your_token
+go run main.go
 ```
