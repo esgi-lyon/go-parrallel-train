@@ -1,0 +1,3115 @@
+openapi: 3.0.3
+info:
+  description: |-
+    Lobstr API is an easy-to-implement API to launch already-made data crawlers, handle accounts and schedules, and collect results.
+
+    ## Authentication
+
+    All requests must include the `Authorization` headers. You can obtain these from the settings menu.
+  title: lobstr API v1
+  version: 1.0.0
+servers:
+- url: https://api.lobstr.io/v1/
+paths:
+  /clusters:
+    post:
+      description: ""
+      operationId: Create Cluster
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              account: 6fbfd5e68d3306e51350bea0232f8fa5
+              concurrency: 2
+              crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+              name: my-cool-cluster
+              params:
+                dropcontact: true
+                max_pages: 100
+              schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+            schema:
+              $ref: '#/components/schemas/ClusterCommonAttribsCreation'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+                object: cluster
+                account: 6fbfd5e68d3306e51350bea0232f8fa5
+                concurrency: 2
+                created_at: 2020-11-17T12:30:00
+                crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+                is_active: true
+                name: my-cool-cluster
+                params:
+                  dropcontact: true
+                  max_pages: 100
+                schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+              schema:
+                $ref: '#/components/schemas/ClusterCreated'
+          description: Created
+      summary: Create Cluster
+      tags: []
+  /clusters/:id:
+    delete:
+      description: ""
+      operationId: Delete Cluster
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          content:
+            application/json:
+              example:
+                id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+                object: cluster
+                deleted: true
+              schema:
+                $ref: '#/components/schemas/ClusterDeleted'
+          description: No Content
+      summary: Delete Cluster
+      tags: []
+    get:
+      description: ""
+      operationId: Get Cluster
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+                object: cluster
+                account: 6fbfd5e68d3306e51350bea0232f8fa5
+                concurrency: 2
+                created_at: 2020-11-17T12:30:00
+                crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+                is_active: true
+                name: my-cool-cluster
+                params:
+                  dropcontact: true
+                  max_pages: 100
+                schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+                total_runs: 123
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: OK
+      summary: Get Cluster
+      tags: []
+    post:
+      description: ""
+      operationId: Update Cluster
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              account: 6fbfd5e68d3306e51350bea0232f8fa5
+              concurrency: 2
+              crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+              is_active: false
+              name: my-cool-cluster
+              params:
+                dropcontact: true
+                max_pages: 100
+              schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+            schema:
+              $ref: '#/components/schemas/ClusterCommonAttribsUpdate'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+                object: cluster
+                account: 6fbfd5e68d3306e51350bea0232f8fa5
+                concurrency: 2
+                created_at: 2020-11-17T12:30:00
+                crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+                is_active: true
+                name: my-cool-cluster
+                params:
+                  dropcontact: true
+                  max_pages: 100
+                schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+                total_runs: 123
+              schema:
+                $ref: '#/components/schemas/Cluster'
+          description: Created
+      summary: Update Cluster
+      tags: []
+  /clusters/:id/empty:
+    post:
+      description: ""
+      operationId: Empty Cluster
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: ecd72cc09f5405c77b635efb9c757b82
+                object: cluster
+                emptied: true
+              schema:
+                $ref: '#/components/schemas/EmptiedCluster'
+          description: Created
+      summary: Empty Cluster
+      tags: []
+  /clusters?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List Clusters
+      parameters:
+      - description: ""
+        example: "1"
+        explode: false
+        in: path
+        name: page
+        required: true
+        schema:
+          type: number
+        style: simple
+      - description: ""
+        example: "10"
+        explode: false
+        in: path
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: simple
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+                  object: cluster
+                  account: 6fbfd5e68d3306e51350bea0232f8fa5
+                  concurrency: 2
+                  created_at: 2020-11-17T12:30:00
+                  crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+                  is_active: true
+                  name: my-cool-cluster
+                  params:
+                    dropcontact: true
+                    max_pages: 100
+                  schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+                  total_runs: 123
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List Clusters
+      tags: []
+  /tasks:
+    post:
+      description: ""
+      operationId: Create Task
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: 6fbfd5e68d3306e51350bea0232f8fa5
+              tasks:
+              - max_pages: 5
+                results_per_page: 100
+                url: https://www.linkedin.com/sales/search/people?companySize=I
+            schema:
+              $ref: '#/components/schemas/Create_Task_request'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 289dff07669d7a23de0ef88d2f7129e7
+                object: task
+                created_at: 2020-11-17T12:30:00
+                is_active: true
+                params:
+                  max_pages: 5
+                  results_per_page: 100
+                  url: https://www.linkedin.com/sales/search/people?companySize=I
+                status: pending
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+          description: Created
+      summary: Create Task
+      tags: []
+  /tasks/:id:
+    delete:
+      description: ""
+      operationId: Delete Task
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          content:
+            application/json:
+              example:
+                id: 289dff07669d7a23de0ef88d2f7129e7
+                object: task
+                deleted: true
+              schema:
+                $ref: '#/components/schemas/TaskDeleted'
+          description: No Content
+      summary: Delete Task
+      tags: []
+    get:
+      description: ""
+      operationId: Get Task
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 289dff07669d7a23de0ef88d2f7129e7
+                object: task
+                created_at: 2020-11-17T12:30:00
+                is_active: true
+                params:
+                  max_pages: 5
+                  results_per_page: 100
+                  url: https://www.linkedin.com/sales/search/people?companySize=I
+                status: running
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: OK
+      summary: Get Task
+      tags: []
+  /tasks/:id/activate:
+    post:
+      description: ""
+      operationId: Activate Task
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 289dff07669d7a23de0ef88d2f7129e7
+                object: task
+                created_at: 2020-11-17T12:30:00
+                is_active: true
+                params:
+                  max_pages: 5
+                  results_per_page: 100
+                  url: https://www.linkedin.com/sales/search/people?companySize=I
+                status: pending
+              schema:
+                $ref: '#/components/schemas/TaskActivated'
+          description: Created
+      summary: Activate Task
+      tags: []
+  /tasks/:id/deactivate:
+    post:
+      description: ""
+      operationId: Deactivate Task
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 289dff07669d7a23de0ef88d2f7129e7
+                object: task
+                created_at: 2020-11-17T12:30:00
+                is_active: false
+                params:
+                  max_pages: 5
+                  results_per_page: 100
+                  url: https://www.linkedin.com/sales/search/people?companySize=I
+                status: deactivated
+              schema:
+                $ref: '#/components/schemas/TaskDeactivated'
+          description: Created
+      summary: Deactivate Task
+      tags: []
+  /tasks?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List Tasks
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+            schema:
+              $ref: '#/components/schemas/List_Tasks_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: 289dff07669d7a23de0ef88d2f7129e7
+                  object: task
+                  created_at: 2020-11-17T12:30:00
+                  is_active: true
+                  params:
+                    max_pages: 5
+                    results_per_page: 100
+                    url: https://www.linkedin.com/sales/search/people?companySize=I
+                  status: running
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List Tasks
+      tags: []
+  /runs:
+    post:
+      description: ""
+      operationId: Launch Run
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+            schema:
+              $ref: '#/components/schemas/Launch_Run_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: d2ddea18f00665ce8623e36bd4e3c7c5
+                object: run
+                created_at: 2020-11-15T11:33:00
+                download_link: "null"
+                ended_at: "null"
+                origin: user
+                started_at: "null"
+                status: running
+              schema:
+                $ref: '#/components/schemas/RunCreated'
+          description: OK
+      summary: Launch Run
+      tags: []
+  /runs/:id:
+    delete:
+      description: ""
+      operationId: Delete Run
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          content:
+            application/json:
+              example:
+                id: d2ddea18f00665ce8623e36bd4e3c7c5
+                object: run
+                deleted: true
+              schema:
+                $ref: '#/components/schemas/RunDeleted'
+          description: No Content
+      summary: Delete Run
+      tags: []
+    get:
+      description: ""
+      operationId: Get Run
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: d2ddea18f00665ce8623e36bd4e3c7c5
+                object: run
+                created_at: 2020-11-15T11:33:00
+                download_link: "null"
+                ended_at: 2020-11-18T13:30:00
+                origin: schedule
+                started_at: 2020-11-18T12:30:00
+                status: done
+              schema:
+                $ref: '#/components/schemas/Run'
+          description: OK
+      summary: Get Run
+      tags: []
+  /runs/:id/stats:
+    get:
+      description: ""
+      operationId: Get Run Stats
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: d2ddea18f00665ce8623e36bd4e3c7c5
+                object: run
+                duration: "null"
+                ended_at: "null"
+                eta: 00:29:11
+                is_done: false
+                percent_done: 3.70%
+                started_at: 2021-05-05T08:56:35
+                total_requests: 768
+                total_results: 30857
+                total_tasks: 78
+                total_tasks_done: 76
+                total_tasks_left: 2
+                updated_at: 2021-05-05T08:56:35
+              schema:
+                $ref: '#/components/schemas/RunStats'
+          description: OK
+      summary: Get Run Stats
+      tags: []
+  /runs/:id/abort:
+    post:
+      description: ""
+      operationId: Abort Run
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: d2ddea18f00665ce8623e36bd4e3c7c5
+                created_at: 2020-11-18T11:30:00
+                duration: "1 day, 4:14:56"
+                object: run
+                ended_at: "null"
+                origin: schedule
+                started_at: 2020-11-18T12:30:00
+                status: done
+                status_reason: aborted
+              schema:
+                $ref: '#/components/schemas/RunAborted'
+          description: OK
+      summary: Abort Run
+      tags: []
+  /runs/:id/download:
+    get:
+      description: ""
+      operationId: Download Run
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: d2ddea18f00665ce8623e36bd4e3c7c5
+                object: run
+                download_link: https://s3.eu-west-1.amazonaws.com/api.lobstr.io/lobstr9e0b62e6d277c90aa7d346de35b5f61d/1b0ffe2b7c3202633fbd23fe6bbe8dc1.xlsx
+                ended_at: 2020-11-18T13:30:00
+                origin: user
+                started_at: 2020-11-18T12:30:00
+                status: success
+              schema:
+                $ref: '#/components/schemas/RunDownloaded'
+          description: OK
+      summary: Download Run
+      tags: []
+  /runs?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List Runs
+      parameters:
+      - description: ""
+        example: "1"
+        explode: false
+        in: path
+        name: page
+        required: true
+        schema:
+          type: number
+        style: simple
+      - description: ""
+        example: "10"
+        explode: false
+        in: path
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: simple
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+            schema:
+              $ref: '#/components/schemas/List_Tasks_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: d2ddea18f00665ce8623e36bd4e3c7c5
+                  object: run
+                  created_at: 2020-11-15T11:33:00
+                  download_link: "null"
+                  ended_at: 2020-11-18T13:30:00
+                  origin: schedule
+                  started_at: 2020-11-18T12:30:00
+                  status: done
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List Runs
+      tags: []
+  /runtasks?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List RunTasks
+      parameters:
+      - description: ""
+        example: "1"
+        explode: false
+        in: path
+        name: page
+        required: true
+        schema:
+          type: number
+        style: simple
+      - description: ""
+        example: "10"
+        explode: false
+        in: path
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: simple
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/List_RunTasks_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: 05a671c66aefea124cc08b76ea6d30bb
+                  object: runtask
+                  created_at: 2020-11-15T11:33:00
+                  duration: 63
+                  ended_at: 2020-11-15T11:34:03
+                  is_done: false
+                  is_error: "False"
+                  last_page: 1
+                  last_result: 25
+                  task: 289dff07669d7a23de0ef88d2f7129e7
+                  run: d2ddea18f00665ce8623e36bd4e3c7c5
+                  started_at: 2020-11-15T11:32:00
+                  total_pages: 1
+                  total_results: 25
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List RunTasks
+      tags: []
+  /runtasks/:id:
+    get:
+      description: ""
+      operationId: Get RunTask
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 05a671c66aefea124cc08b76ea6d30bb
+                object: runtask
+                created_at: 2020-11-15T11:33:00
+                duration: 63
+                ended_at: 2020-11-15T11:34:03
+                is_done: false
+                is_error: "False"
+                last_page: 1
+                last_result: 25
+                task: 289dff07669d7a23de0ef88d2f7129e7
+                run: d2ddea18f00665ce8623e36bd4e3c7c5
+                started_at: 2020-11-15T11:32:00
+                total_pages: 1
+                total_results: 25
+              schema:
+                $ref: '#/components/schemas/RunTask'
+          description: OK
+      summary: Get RunTask
+      tags: []
+  /results:
+    get:
+      description: ""
+      operationId: List Results
+      parameters:
+      - description: ""
+        example: "1"
+        explode: true
+        in: query
+        name: page
+        required: true
+        schema:
+          type: number
+        style: form
+      - description: ""
+        example: "10"
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: form
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+              run: '''d2ddea18f00665ce8623e36bd4e3c7c5'''
+              task: '''2e3c3b47a66fe2faa20c78a3a130b9e3'''
+            schema:
+              $ref: '#/components/schemas/List_Results_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: 098f6bcd4621d373cade4e832627b4f6
+                  object: result
+                  task: 289dff07669d7a23de0ef88d2f7129e7
+                  run: d2ddea18f00665ce8623e36bd4e3c7c5
+                  first_name: Sasha
+                  last_name: Bouloudnine
+                  company_name: lobstr
+                  location: "Paris Area, France"
+                  position: Co-founder
+                  industry: Internet
+                  connections: 577
+                  url: https://www.linkedin.com/in/sasha-bouloudnine-51908286/
+                  picture: https://media-exp1.licdn.com/dms/image/C4E03AQHWe6qT_peEWg
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List Results
+      tags: []
+  /results/:id:
+    get:
+      description: ""
+      operationId: Get Result
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 098f6bcd4621d373cade4e832627b4f6
+                object: result
+                task: 289dff07669d7a23de0ef88d2f7129e7
+                run: d2ddea18f00665ce8623e36bd4e3c7c5
+                first_name: Sasha
+                last_name: Bouloudnine
+                company_name: lobstr
+                location: "Paris Area, France"
+                position: Co-founder
+                industry: Internet
+                connections: 577
+                url: https://www.linkedin.com/in/sasha-bouloudnine-51908286/
+                picture: https://media-exp1.licdn.com/dms/image/C4E03AQHWe6qT_peEWg
+              schema:
+                $ref: '#/components/schemas/Result'
+          description: OK
+      summary: Get Result
+      tags: []
+  /schedules:
+    post:
+      description: ""
+      operationId: Create Schedule
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cron_expression: '@daily'
+              description: cooool one :o
+              name: my-cool-schedule
+            schema:
+              $ref: '#/components/schemas/ScheduleCommonParams'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: c81e728d9d4c2f636f067f89cc14862c
+                object: schedule
+                created_at: 2020-11-15T11:33:00
+                cron_expression: '@daily'
+                description: cooool one :o
+                name: my-cool-schedule
+              schema:
+                $ref: '#/components/schemas/ScheduleCreated'
+          description: Created
+      summary: Create Schedule
+      tags: []
+  /schedules/:id:
+    delete:
+      description: ""
+      operationId: Delete Schedule
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          content:
+            application/json:
+              example:
+                id: c81e728d9d4c2f636f067f89cc14862c
+                object: schedule
+                deleted: true
+              schema:
+                $ref: '#/components/schemas/ScheduleDeleted'
+          description: No Content
+      summary: Delete Schedule
+      tags: []
+    get:
+      description: ""
+      operationId: Get Schedule
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: c81e728d9d4c2f636f067f89cc14862c
+                object: schedule
+                created_at: 2020-11-15T11:33:00
+                cron_expression: '@daily'
+                description: cooool one :o
+                last_run_at: 2020-11-16T12:30:00
+                name: my-cool-schedule
+                next_run_at: 2020-11-18T12:30:00
+              schema:
+                $ref: '#/components/schemas/Schedule'
+          description: OK
+      summary: Get Schedule
+      tags: []
+    post:
+      description: ""
+      operationId: Update Schedule
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              cron_expression: '@daily'
+              description: cooool one :o
+              name: my-cool-schedule
+            schema:
+              $ref: '#/components/schemas/ScheduleCommonParams'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: c81e728d9d4c2f636f067f89cc14862c
+                object: schedule
+                created_at: 2020-11-15T11:33:00
+                cron_expression: '@daily'
+                description: cooool one :o
+                last_run_at: 2020-11-16T12:30:00
+                name: my-cool-schedule
+                next_run_at: 2020-11-18T12:30:00
+              schema:
+                $ref: '#/components/schemas/Schedule'
+          description: Created
+      summary: Update Schedule
+      tags: []
+  /schedules?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List Schedules
+      parameters:
+      - description: ""
+        example: "1"
+        explode: false
+        in: path
+        name: page
+        required: true
+        schema:
+          type: number
+        style: simple
+      - description: ""
+        example: "10"
+        explode: false
+        in: path
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: simple
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                runs:
+                - id: c81e728d9d4c2f636f067f89cc14862c
+                  object: schedule
+                  created_at: 2020-11-15T11:33:00
+                  cron_expression: '@daily'
+                  description: cooool one :o
+                  last_run_at: 2020-11-16T12:30:00
+                  name: my-cool-schedule
+                  next_run_at: 2020-11-18T12:30:00
+              schema:
+                $ref: '#/components/schemas/List_Schedules_200_response'
+          description: OK
+      summary: List Schedules
+      tags: []
+  /crawlers/:id:
+    get:
+      description: ""
+      operationId: Get Crawler
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: f0935e4cd5920aa6c7c996a5ee53a70f
+                object: crawler
+                created_at: 2020-11-17T12:30:00
+                description: Linkedin Sales Nav Profiles Export d:-o
+                is_public: true
+                labels:
+                - sales-navigator
+                max_concurrency: 100
+                name: Sales Navigator Profiles Export
+                rank: 1
+                slug: linkedin-sales-nav-iter-profiles
+                updated_at: 2020-11-17T12:30:00
+              schema:
+                $ref: '#/components/schemas/Crawler'
+          description: OK
+      summary: Get Crawler
+      tags: []
+  /crawlers/:id/params:
+    get:
+      description: ""
+      operationId: Get Crawler Params
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                cluster:
+                  account:
+                    email:
+                      description: email of the account
+                      type: string
+                      required: true
+                    password:
+                      description: password of the account
+                      type: string
+                      required: true
+                    type: linkedin-sales-navigator
+                  dropcontact:
+                    description: "if true, will enrich profile with dropcontact data\
+                      \ e.g. mail, phone, siret"
+                    type: boolean
+                    required: false
+                task:
+                  max_pages:
+                    description: max. pages the crawler will reach
+                    type: int
+                    required: false
+                  results_per_page:
+                    description: total results collected per page
+                    type: int
+                    required: false
+                  url:
+                    description: starting linkedin search URL
+                    type: string
+                    required: true
+              schema:
+                $ref: '#/components/schemas/CrawlerParams'
+          description: OK
+      summary: Get Crawler Params
+      tags: []
+  /crawlers?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List Crawlers
+      parameters:
+      - description: ""
+        example: "1"
+        explode: false
+        in: path
+        name: page
+        required: true
+        schema:
+          type: number
+        style: simple
+      - description: ""
+        example: "10"
+        explode: false
+        in: path
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: simple
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: f0935e4cd5920aa6c7c996a5ee53a70f
+                  object: crawler
+                  created_at: 2020-11-17T12:30:00
+                  description: Linkedin Sales Nav Profiles Export d:-o
+                  is_public: true
+                  labels:
+                  - sales-navigator
+                  max_concurrency: 100
+                  name: Sales Navigator Profiles Export
+                  rank: 1
+                  slug: linkedin-sales-nav-iter-profiles
+                  updated_at: 2020-11-17T12:30:00
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List Crawlers
+      tags: []
+  /accounts:
+    post:
+      description: ""
+      operationId: Create Account
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              type: linkedin-sales-navigator
+              name: my-cool-account
+              username: sasha.bouloudnine@lobstr.io
+              password: no-privacy-no-mercy
+            schema:
+              $ref: '#/components/schemas/AccountCommonParams'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 19bb1c73b0d628003dcd888f0820ece0
+                object: account
+                created_at: 2020-11-15T11:33:00
+                last_synchronization_time: "null"
+                name: my-cool-account
+                status: 100
+                status_code_info: pending
+                status_code_description: your account needs to be synchronized
+                total_synchronizations: 0
+                type: linkedin-sales-navigator
+                updated_at: "null"
+              schema:
+                $ref: '#/components/schemas/AccountCreated'
+          description: Created
+      summary: Create Account
+      tags: []
+  /accounts/:id:
+    delete:
+      description: ""
+      operationId: Delete Account
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          content:
+            application/json:
+              example:
+                id: 19bb1c73b0d628003dcd888f0820ece0
+                object: account
+                deleted: true
+              schema:
+                $ref: '#/components/schemas/AccountDeleted'
+          description: No Content
+      summary: Delete Account
+      tags: []
+    get:
+      description: ""
+      operationId: Get Account
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 19bb1c73b0d628003dcd888f0820ece0
+                object: account
+                created_at: 2020-11-15T11:33:00
+                last_synchronization_time: 2020-11-18T12:30:00
+                name: my-cool-account
+                status: 200
+                status_code_info: success
+                status_code_description: your account has been properly synchronized
+                total_synchronizations: 19
+                type: linkedin-sales-navigator
+                updated_at: 2020-11-15T12:33:00
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: OK
+      summary: Get Account
+      tags: []
+    post:
+      description: ""
+      operationId: Update Account
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: my-cool-account
+              username: sasha.bouloudnine@lobstr.io
+              password: no-privacy-no-mercy
+            schema:
+              $ref: '#/components/schemas/UpdateAccountCommonParams'
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 19bb1c73b0d628003dcd888f0820ece0
+                object: account
+                created_at: 2020-11-15T11:33:00
+                last_synchronization_time: "null"
+                name: my-cool-account
+                status: 100
+                status_code_info: pending
+                status_code_description: your account needs to be synchronized
+                type: linkedin-sales-navigator
+                total_synchronizations: 0
+                updated_at: 2020-11-15T12:33:00
+              schema:
+                $ref: '#/components/schemas/AccountUpdated'
+          description: Created
+      summary: Update Account
+      tags: []
+  /accounts/:id/refresh:
+    post:
+      description: ""
+      operationId: Refresh Account
+      parameters:
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "202":
+          content:
+            application/json:
+              example:
+                id: 19bb1c73b0d628003dcd888f0820ece0
+                object: account
+                created_at: 2020-11-15T11:33:00
+                last_synchronization_time: 2020-11-15T13:33:00
+                name: my-cool-account
+                status: 300
+                status_code_info: synchronizing
+                status_code_description: your account is currently being synchronized
+                total_synchronizations: 1
+                type: linkedin-sales-navigator
+                updated_at: 2020-11-15T12:33:00
+              schema:
+                $ref: '#/components/schemas/AccountRefreshed'
+          description: Accepted
+      summary: Refresh Account
+      tags: []
+  /accounts?page={page}&limit={limit}:
+    get:
+      description: ""
+      operationId: List Accounts
+      parameters:
+      - description: ""
+        example: "1"
+        explode: false
+        in: path
+        name: page
+        required: true
+        schema:
+          type: number
+        style: simple
+      - description: ""
+        example: "10"
+        explode: false
+        in: path
+        name: limit
+        required: false
+        schema:
+          default: 50
+          type: number
+        style: simple
+      - description: e.g. Token SECRET_TOKEN
+        example: Token SECRET_TOKEN
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                page: 1
+                limit: 10
+                data:
+                - id: 19bb1c73b0d628003dcd888f0820ece0
+                  object: account
+                  created_at: 2020-11-15T11:33:00
+                  last_synchronization_time: 2020-11-18T12:30:00
+                  name: my-cool-account
+                  status: 200
+                  status_code_info: success
+                  status_code_description: your account has been properly synchronized
+                  total_synchronizations: 19
+                  type: linkedin-sales-navigator
+                  updated_at: 2020-11-15T12:33:00
+              schema:
+                $ref: '#/components/schemas/List_Clusters_200_response'
+          description: OK
+      summary: List Accounts
+      tags: []
+components:
+  schemas:
+    Cluster:
+      example:
+        total_runs: 123
+        schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+        is_active: true
+        crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+        name: my-cool-cluster
+        created_at: 2020-11-17T12:30:00
+        id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+        params:
+          dropcontact: true
+          max_pages: 100
+        account: 6fbfd5e68d3306e51350bea0232f8fa5
+        object: cluster
+        concurrency: 2
+      properties:
+        id:
+          example: 65b9eea6e1cc6bb9f0cd2a47751a186f
+          type: string
+        object:
+          example: cluster
+          type: string
+        account:
+          example: 6fbfd5e68d3306e51350bea0232f8fa5
+          type: string
+        concurrency:
+          example: 2
+          type: number
+        created_at:
+          example: 2020-11-17T12:30:00
+          type: string
+        crawler:
+          example: e9619cf7d9a9a2da1fed1f25d32ca3ae
+          type: string
+        is_active:
+          example: true
+          type: boolean
+        name:
+          example: my-cool-cluster
+          type: string
+        params:
+          $ref: '#/components/schemas/ClusterCommonParams'
+        schedule:
+          example: 3dbbddabf0a47a9c271ddf8c19a8dc09
+          type: string
+        total_runs:
+          example: 123
+          type: number
+      required:
+      - account
+      - concurrency
+      - crawler
+      - created_at
+      - id
+      - is_active
+      - name
+      - params
+      - schedule
+      - total_runs
+      type: object
+    ClusterCreated:
+      example:
+        schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+        is_active: true
+        crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+        name: my-cool-cluster
+        created_at: 2020-11-17T12:30:00
+        id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+        params:
+          dropcontact: true
+          max_pages: 100
+        account: 6fbfd5e68d3306e51350bea0232f8fa5
+        object: cluster
+        concurrency: 2
+      properties:
+        id:
+          example: 65b9eea6e1cc6bb9f0cd2a47751a186f
+          type: string
+        object:
+          example: cluster
+          type: string
+        account:
+          example: 6fbfd5e68d3306e51350bea0232f8fa5
+          type: string
+        concurrency:
+          example: 2
+          type: number
+        created_at:
+          example: 2020-11-17T12:30:00
+          type: string
+        crawler:
+          example: e9619cf7d9a9a2da1fed1f25d32ca3ae
+          type: string
+        is_active:
+          example: true
+          type: boolean
+        name:
+          example: my-cool-cluster
+          type: string
+        params:
+          $ref: '#/components/schemas/ClusterCommonParams'
+        schedule:
+          example: 3dbbddabf0a47a9c271ddf8c19a8dc09
+          type: string
+      required:
+      - account
+      - concurrency
+      - crawler
+      - created_at
+      - id
+      - is_active
+      - name
+      - params
+      - schedule
+      type: object
+    ClusterDeleted:
+      example:
+        deleted: true
+        id: 65b9eea6e1cc6bb9f0cd2a47751a186f
+        object: cluster
+      properties:
+        id:
+          example: 65b9eea6e1cc6bb9f0cd2a47751a186f
+          type: string
+        object:
+          example: cluster
+          type: string
+        deleted:
+          example: true
+          type: boolean
+      type: object
+    ClusterCommonAttribsCreation:
+      example:
+        schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+        crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+        name: my-cool-cluster
+        params:
+          dropcontact: true
+          max_pages: 100
+        account: 6fbfd5e68d3306e51350bea0232f8fa5
+        concurrency: 2
+      properties:
+        account:
+          example: 6fbfd5e68d3306e51350bea0232f8fa5
+          type: string
+        concurrency:
+          example: 2
+          type: number
+        crawler:
+          example: e9619cf7d9a9a2da1fed1f25d32ca3ae
+          type: string
+        name:
+          example: my-cool-cluster
+          type: string
+        params:
+          $ref: '#/components/schemas/ClusterCommonParams'
+        schedule:
+          example: 3dbbddabf0a47a9c271ddf8c19a8dc09
+          type: string
+      required:
+      - account
+      - crawler
+      - name
+      - params
+      - schedule
+      type: object
+    ClusterCommonAttribsUpdate:
+      example:
+        schedule: 3dbbddabf0a47a9c271ddf8c19a8dc09
+        is_active: true
+        crawler: e9619cf7d9a9a2da1fed1f25d32ca3ae
+        name: my-cool-cluster
+        params:
+          dropcontact: true
+          max_pages: 100
+        account: 6fbfd5e68d3306e51350bea0232f8fa5
+        concurrency: 2
+      properties:
+        account:
+          example: 6fbfd5e68d3306e51350bea0232f8fa5
+          type: string
+        concurrency:
+          example: 2
+          type: number
+        crawler:
+          example: e9619cf7d9a9a2da1fed1f25d32ca3ae
+          type: string
+        is_active:
+          type: boolean
+        name:
+          example: my-cool-cluster
+          type: string
+        params:
+          $ref: '#/components/schemas/ClusterCommonParams'
+        schedule:
+          example: 3dbbddabf0a47a9c271ddf8c19a8dc09
+          type: string
+      required:
+      - account
+      - crawler
+      - is_active
+      - name
+      - params
+      - schedule
+      type: object
+    ClusterCommonParams:
+      example:
+        dropcontact: true
+        max_pages: 100
+      properties:
+        dropcontact:
+          example: true
+          type: boolean
+        max_pages:
+          example: 100
+          type: number
+      type: object
+    Task:
+      example:
+        is_active: true
+        created_at: 2020-11-17T12:30:00
+        id: 289dff07669d7a23de0ef88d2f7129e7
+        params:
+          results_per_page: 100
+          max_pages: 5
+          url: https://www.linkedin.com/sales/search/people?companySize=I
+        object: task
+        status: running
+      properties:
+        id:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        object:
+          example: task
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-17T12:30:00
+          type: string
+        is_active:
+          example: true
+          type: boolean
+        params:
+          $ref: '#/components/schemas/TaskCommonParams'
+        status:
+          example: running
+          type: string
+      required:
+      - created_at
+      - id
+      - is_active
+      - params
+      type: object
+    TaskCreated:
+      example:
+        is_active: true
+        created_at: 2020-11-17T12:30:00
+        id: 289dff07669d7a23de0ef88d2f7129e7
+        params:
+          results_per_page: 100
+          max_pages: 5
+          url: https://www.linkedin.com/sales/search/people?companySize=I
+        object: task
+        status: pending
+      properties:
+        id:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        object:
+          example: task
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-17T12:30:00
+          type: string
+        is_active:
+          example: true
+          type: boolean
+        params:
+          $ref: '#/components/schemas/TaskCommonParams'
+        status:
+          example: pending
+          type: string
+      required:
+      - created_at
+      - id
+      - is_active
+      - params
+      type: object
+    TaskActivated:
+      example:
+        is_active: true
+        created_at: 2020-11-17T12:30:00
+        id: 289dff07669d7a23de0ef88d2f7129e7
+        params:
+          results_per_page: 100
+          max_pages: 5
+          url: https://www.linkedin.com/sales/search/people?companySize=I
+        object: task
+        status: pending
+      properties:
+        id:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        object:
+          example: task
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-17T12:30:00
+          type: string
+        is_active:
+          example: true
+          type: boolean
+        params:
+          $ref: '#/components/schemas/TaskCommonParams'
+        status:
+          example: pending
+          type: string
+      required:
+      - created_at
+      - id
+      - is_active
+      - params
+      type: object
+    TaskDeactivated:
+      example:
+        is_active: true
+        created_at: 2020-11-17T12:30:00
+        id: 289dff07669d7a23de0ef88d2f7129e7
+        params:
+          results_per_page: 100
+          max_pages: 5
+          url: https://www.linkedin.com/sales/search/people?companySize=I
+        object: task
+        status: deactivated
+      properties:
+        id:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        object:
+          example: task
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-17T12:30:00
+          type: string
+        is_active:
+          type: boolean
+        params:
+          $ref: '#/components/schemas/TaskCommonParams'
+        status:
+          example: deactivated
+          type: string
+      required:
+      - created_at
+      - id
+      - is_active
+      - params
+      type: object
+    TaskDeleted:
+      example:
+        deleted: true
+        id: 289dff07669d7a23de0ef88d2f7129e7
+        object: task
+      properties:
+        id:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        object:
+          example: task
+          type: string
+        deleted:
+          example: true
+          type: boolean
+      type: object
+    CreateTaskParams:
+      properties:
+        params:
+          $ref: '#/components/schemas/TaskCommonParams'
+      required:
+      - params
+      type: object
+    TaskCommonParams:
+      example:
+        results_per_page: 100
+        max_pages: 5
+        url: https://www.linkedin.com/sales/search/people?companySize=I
+      properties:
+        max_pages:
+          example: 5
+          type: number
+        results_per_page:
+          example: 100
+          type: number
+        url:
+          example: https://www.linkedin.com/sales/search/people?companySize=I
+          type: string
+      type: object
+    Crawler:
+      example:
+        max_concurrency: 100
+        updated_at: 2020-11-17T12:30:00
+        is_public: true
+        name: Sales Navigator Profiles Export
+        created_at: 2020-11-17T12:30:00
+        description: Linkedin Sales Nav Profiles Export d:-o
+        rank: 1
+        id: f0935e4cd5920aa6c7c996a5ee53a70f
+        slug: linkedin-sales-nav-iter-profiles
+        object: crawler
+        labels:
+        - ""
+        - ""
+      properties:
+        id:
+          description: unique id
+          example: f0935e4cd5920aa6c7c996a5ee53a70f
+          type: string
+        object:
+          example: crawler
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-17T12:30:00
+          type: string
+        description:
+          description: description
+          example: Linkedin Sales Nav Profiles Export d:-o
+          type: string
+        is_public:
+          description: public status
+          example: true
+          type: boolean
+        labels:
+          description: labels
+          items: {}
+          type: array
+        max_concurrency:
+          description: total number of concurrent threads allowed within one cluster
+          example: 100
+          type: number
+        name:
+          description: public name
+          example: Sales Navigator Profiles Export
+          type: string
+        rank:
+          description: position within the list of crawlers
+          example: 1
+          type: number
+        slug:
+          description: unique slug
+          example: linkedin-sales-nav-iter-profiles
+          type: string
+        updated_at:
+          description: date of update (ISO8601 format)
+          example: 2020-11-17T12:30:00
+          type: string
+      required:
+      - created_at
+      - id
+      - is_public
+      - max_concurrency
+      - name
+      - rank
+      - slug
+      - updated_at
+      type: object
+    CrawlerParams:
+      example:
+        cluster:
+          dropcontact:
+            description: "if true, will enrich profile with dropcontact data e.g.\
+              \ mail, phone, siret"
+            type: boolean
+            required: true
+          account:
+            password:
+              description: password of the account
+              type: string
+              required: true
+            type: linkedin-sales-navigator
+            email:
+              description: email of the account
+              type: string
+              required: true
+        task:
+          results_per_page:
+            description: total results collected per page
+            type: int
+            required: true
+          max_pages:
+            description: max. pages the crawler will reach
+            type: int
+            required: true
+          url:
+            description: starting linkedin search URL
+            type: string
+            required: true
+      properties:
+        cluster:
+          $ref: '#/components/schemas/ClusterCrawlerParams'
+        task:
+          $ref: '#/components/schemas/TaskCrawlerParams'
+      required:
+      - cluster
+      - task
+      type: object
+    ClusterCrawlerParams:
+      example:
+        dropcontact:
+          description: "if true, will enrich profile with dropcontact data e.g. mail,\
+            \ phone, siret"
+          type: boolean
+          required: true
+        account:
+          password:
+            description: password of the account
+            type: string
+            required: true
+          type: linkedin-sales-navigator
+          email:
+            description: email of the account
+            type: string
+            required: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountCrawlerParams'
+        dropcontact:
+          $ref: '#/components/schemas/ClusterCrawlerParams_dropcontact'
+      required:
+      - account
+      type: object
+    TaskCrawlerParams:
+      example:
+        results_per_page:
+          description: total results collected per page
+          type: int
+          required: true
+        max_pages:
+          description: max. pages the crawler will reach
+          type: int
+          required: true
+        url:
+          description: starting linkedin search URL
+          type: string
+          required: true
+      properties:
+        max_pages:
+          $ref: '#/components/schemas/TaskCrawlerParams_max_pages'
+        results_per_page:
+          $ref: '#/components/schemas/TaskCrawlerParams_results_per_page'
+        url:
+          $ref: '#/components/schemas/TaskCrawlerParams_url'
+      type: object
+    AccountCrawlerParams:
+      example:
+        password:
+          description: password of the account
+          type: string
+          required: true
+        type: linkedin-sales-navigator
+        email:
+          description: email of the account
+          type: string
+          required: true
+      properties:
+        email:
+          $ref: '#/components/schemas/AccountCrawlerParams_email'
+        password:
+          $ref: '#/components/schemas/AccountCrawlerParams_password'
+        type:
+          example: linkedin-sales-navigator
+          type: string
+      required:
+      - type
+      type: object
+    Schedule:
+      example:
+        last_run_at: 2020-11-16T12:30:00
+        next_run_at: 2020-11-18T12:30:00
+        cron_expression: '@daily'
+        name: my-cool-schedule
+        created_at: 2020-11-15T11:33:00
+        description: cooool one :o
+        id: c81e728d9d4c2f636f067f89cc14862c
+        object: schedule
+      properties:
+        id:
+          description: unique id
+          example: c81e728d9d4c2f636f067f89cc14862c
+          type: string
+        object:
+          example: schedule
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        cron_expression:
+          description: frequency of execution
+          example: '@daily'
+          type: string
+        description:
+          example: cooool one :o
+          type: string
+        last_run_at:
+          description: date of last run (ISO8601 format)
+          example: 2020-11-16T12:30:00
+          type: string
+        name:
+          example: my-cool-schedule
+          type: string
+        next_run_at:
+          description: date of next run (ISO8601 format)
+          example: 2020-11-18T12:30:00
+          type: string
+      required:
+      - cron_expression
+      - id
+      - name
+      type: object
+    ScheduleCommonParams:
+      example:
+        cron_expression: '@daily'
+        name: my-cool-schedule
+        description: cooool one :o
+      properties:
+        cron_expression:
+          example: '@daily'
+          type: string
+        description:
+          example: cooool one :o
+          type: string
+        name:
+          example: my-cool-schedule
+          type: string
+      required:
+      - cron_expression
+      - name
+      type: object
+    ScheduleCreated:
+      example:
+        cron_expression: '@daily'
+        name: my-cool-schedule
+        created_at: 2020-11-15T11:33:00
+        description: cooool one :o
+        id: c81e728d9d4c2f636f067f89cc14862c
+        object: schedule
+      properties:
+        id:
+          description: unique id
+          example: c81e728d9d4c2f636f067f89cc14862c
+          type: string
+        object:
+          example: schedule
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        cron_expression:
+          description: frequency of execution
+          example: '@daily'
+          type: string
+        description:
+          example: cooool one :o
+          type: string
+        name:
+          example: my-cool-schedule
+          type: string
+      required:
+      - cron_expression
+      - id
+      - name
+      type: object
+    ScheduleDeleted:
+      example:
+        deleted: true
+        id: c81e728d9d4c2f636f067f89cc14862c
+        object: schedule
+      properties:
+        id:
+          example: c81e728d9d4c2f636f067f89cc14862c
+          type: string
+        object:
+          example: schedule
+          type: string
+        deleted:
+          example: true
+          type: boolean
+      type: object
+    Run:
+      example:
+        download_link: "null"
+        origin: schedule
+        created_at: 2020-11-15T11:33:00
+        started_at: 2020-11-18T12:30:00
+        id: d2ddea18f00665ce8623e36bd4e3c7c5
+        ended_at: 2020-11-18T13:30:00
+        object: run
+        status: done
+      properties:
+        id:
+          description: unique id
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        object:
+          example: run
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        download_link:
+          example: "null"
+          type: string
+        ended_at:
+          description: date of next run (ISO8601 format)
+          example: 2020-11-18T13:30:00
+          type: string
+        origin:
+          example: schedule
+          type: string
+        started_at:
+          description: date of next run (ISO8601 format)
+          example: 2020-11-18T12:30:00
+          type: string
+        status:
+          example: done
+          type: string
+      required:
+      - id
+      - origin
+      - status
+      type: object
+    RunCreated:
+      example:
+        download_link: "null"
+        origin: user
+        created_at: 2020-11-15T11:33:00
+        started_at: "null"
+        id: d2ddea18f00665ce8623e36bd4e3c7c5
+        ended_at: "null"
+        object: run
+        status: running
+      properties:
+        id:
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        object:
+          example: run
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        download_link:
+          example: "null"
+          type: string
+        ended_at:
+          example: "null"
+          type: string
+        origin:
+          example: user
+          type: string
+        started_at:
+          example: "null"
+          type: string
+        status:
+          example: running
+          type: string
+      type: object
+    RunRestarted:
+      properties:
+        id:
+          description: unique id
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        object:
+          example: run
+          type: string
+        download_link:
+          example: "null"
+          type: string
+        ended_at:
+          example: "null"
+          type: string
+        origin:
+          example: user
+          type: string
+        started_at:
+          description: date of next run (ISO8601 format)
+          example: 2020-11-18T12:30:00
+          type: string
+        status:
+          example: running
+          type: string
+      required:
+      - id
+      - origin
+      - status
+      type: object
+    RunAborted:
+      example:
+        duration: "1 day, 4:14:56"
+        origin: schedule
+        created_at: 2020-11-18T11:30:00
+        started_at: 2020-11-18T12:30:00
+        id: d2ddea18f00665ce8623e36bd4e3c7c5
+        status_reason: aborted
+        ended_at: "null"
+        object: run
+        status: done
+      properties:
+        id:
+          description: unique id
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        created_at:
+          example: 2020-11-18T11:30:00
+          type: string
+        duration:
+          example: "1 day, 4:14:56"
+          type: string
+        object:
+          example: run
+          type: string
+        origin:
+          example: schedule
+          type: string
+        ended_at:
+          example: "null"
+          type: string
+        started_at:
+          example: 2020-11-18T12:30:00
+          type: string
+        status:
+          example: done
+          type: string
+        status_reason:
+          example: aborted
+          type: string
+      required:
+      - id
+      - origin
+      - status
+      type: object
+    RunDeleted:
+      example:
+        deleted: true
+        id: d2ddea18f00665ce8623e36bd4e3c7c5
+        object: run
+      properties:
+        id:
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        object:
+          example: run
+          type: string
+        deleted:
+          example: true
+          type: boolean
+      type: object
+    RunDownloaded:
+      example:
+        download_link: https://s3.eu-west-1.amazonaws.com/api.lobstr.io/lobstr9e0b62e6d277c90aa7d346de35b5f61d/1b0ffe2b7c3202633fbd23fe6bbe8dc1.xlsx
+        origin: user
+        started_at: 2020-11-18T12:30:00
+        id: d2ddea18f00665ce8623e36bd4e3c7c5
+        ended_at: 2020-11-18T13:30:00
+        object: run
+        status: success
+      properties:
+        id:
+          description: unique id
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        object:
+          example: run
+          type: string
+        download_link:
+          example: https://s3.eu-west-1.amazonaws.com/api.lobstr.io/lobstr9e0b62e6d277c90aa7d346de35b5f61d/1b0ffe2b7c3202633fbd23fe6bbe8dc1.xlsx
+          type: string
+        ended_at:
+          example: 2020-11-18T13:30:00
+          type: string
+        origin:
+          example: user
+          type: string
+        started_at:
+          description: date of next run (ISO8601 format)
+          example: 2020-11-18T12:30:00
+          type: string
+        status:
+          example: success
+          type: string
+      required:
+      - id
+      - origin
+      - status
+      type: object
+    RunStats:
+      example:
+        total_tasks_done: 76
+        total_tasks_left: 2
+        is_done: true
+        percent_done: 3.70%
+        total_tasks: 78
+        total_results: 30857
+        duration: "null"
+        eta: 00:29:11
+        updated_at: 2021-05-05T08:56:35
+        started_at: 2021-05-05T08:56:35
+        total_requests: 768
+        id: d2ddea18f00665ce8623e36bd4e3c7c5
+        ended_at: "null"
+        object: run
+      properties:
+        id:
+          description: unique id
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        object:
+          example: run
+          type: string
+        duration:
+          example: "null"
+          type: string
+        ended_at:
+          example: "null"
+          type: string
+        eta:
+          example: 00:29:11
+          type: string
+        is_done:
+          type: boolean
+        percent_done:
+          example: 3.70%
+          type: string
+        started_at:
+          example: 2021-05-05T08:56:35
+          type: string
+        total_requests:
+          example: 768
+          type: number
+        total_results:
+          example: 30857
+          type: number
+        total_tasks:
+          example: 78
+          type: number
+        total_tasks_done:
+          example: 76
+          type: number
+        total_tasks_left:
+          example: 2
+          type: number
+        updated_at:
+          example: 2021-05-05T08:56:35
+          type: string
+      required:
+      - eta
+      - id
+      - is_done
+      - percent_done
+      - started_at
+      - total_requests
+      - total_results
+      - total_tasks
+      - total_tasks_done
+      - total_tasks_left
+      - updated_at
+      type: object
+    Result:
+      example:
+        last_name: Bouloudnine
+        run: d2ddea18f00665ce8623e36bd4e3c7c5
+        industry: Internet
+        url: https://www.linkedin.com/in/sasha-bouloudnine-51908286/
+        picture: https://media-exp1.licdn.com/dms/image/C4E03AQHWe6qT_peEWg
+        task: 289dff07669d7a23de0ef88d2f7129e7
+        company_name: lobstr
+        location: "Paris Area, France"
+        id: 098f6bcd4621d373cade4e832627b4f6
+        position: Co-founder
+        first_name: Sasha
+        connections: 577
+        object: result
+      properties:
+        id:
+          example: 098f6bcd4621d373cade4e832627b4f6
+          type: string
+        object:
+          example: result
+          type: string
+        task:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        run:
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        first_name:
+          example: Sasha
+          type: string
+        last_name:
+          example: Bouloudnine
+          type: string
+        company_name:
+          example: lobstr
+          type: string
+        location:
+          example: "Paris Area, France"
+          type: string
+        position:
+          example: Co-founder
+          type: string
+        industry:
+          example: Internet
+          type: string
+        connections:
+          example: 577
+          type: number
+        url:
+          example: https://www.linkedin.com/in/sasha-bouloudnine-51908286/
+          type: string
+        picture:
+          example: https://media-exp1.licdn.com/dms/image/C4E03AQHWe6qT_peEWg
+          type: string
+      type: object
+    Account:
+      example:
+        status_code_info: success
+        updated_at: 2020-11-15T12:33:00
+        total_synchronizations: 19
+        name: my-cool-account
+        created_at: 2020-11-15T11:33:00
+        status_code_description: your account has been properly synchronized
+        id: 19bb1c73b0d628003dcd888f0820ece0
+        type: linkedin-sales-navigator
+        object: account
+        last_synchronization_time: 2020-11-18T12:30:00
+        status: 200
+      properties:
+        id:
+          example: 19bb1c73b0d628003dcd888f0820ece0
+          type: string
+        object:
+          example: account
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        last_synchronization_time:
+          description: date of last synchronization (ISO8601 format)
+          example: 2020-11-18T12:30:00
+          type: string
+        name:
+          example: my-cool-account
+          type: string
+        status:
+          example: 200
+          type: number
+        status_code_info:
+          example: success
+          type: string
+        status_code_description:
+          example: your account has been properly synchronized
+          type: string
+        total_synchronizations:
+          description: total synchronizations
+          example: 19
+          type: number
+        type:
+          example: linkedin-sales-navigator
+          type: string
+        updated_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T12:33:00
+          type: string
+      required:
+      - id
+      - status
+      - status_code_description
+      - status_code_info
+      - type
+      type: object
+    UpdateAccountCommonParams:
+      example:
+        password: no-privacy-no-mercy
+        name: my-cool-account
+        username: sasha.bouloudnine@lobstr.io
+      properties:
+        name:
+          example: my-cool-account
+          type: string
+        username:
+          example: sasha.bouloudnine@lobstr.io
+          type: string
+        password:
+          example: no-privacy-no-mercy
+          type: string
+      type: object
+    AccountCommonParams:
+      example:
+        password: no-privacy-no-mercy
+        name: my-cool-account
+        type: linkedin-sales-navigator
+        username: sasha.bouloudnine@lobstr.io
+      properties:
+        type:
+          example: linkedin-sales-navigator
+          type: string
+        name:
+          example: my-cool-account
+          type: string
+        username:
+          example: sasha.bouloudnine@lobstr.io
+          type: string
+        password:
+          example: no-privacy-no-mercy
+          type: string
+      type: object
+    AccountCreated:
+      example:
+        status_code_info: pending
+        updated_at: "null"
+        total_synchronizations: 0.8008281904610115
+        name: my-cool-account
+        created_at: 2020-11-15T11:33:00
+        status_code_description: your account needs to be synchronized
+        id: 19bb1c73b0d628003dcd888f0820ece0
+        type: linkedin-sales-navigator
+        object: account
+        last_synchronization_time: "null"
+        status: 100
+      properties:
+        id:
+          example: 19bb1c73b0d628003dcd888f0820ece0
+          type: string
+        object:
+          example: account
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        last_synchronization_time:
+          example: "null"
+          type: string
+        name:
+          example: my-cool-account
+          type: string
+        status:
+          example: 100
+          type: number
+        status_code_info:
+          example: pending
+          type: string
+        status_code_description:
+          example: your account needs to be synchronized
+          type: string
+        total_synchronizations:
+          description: total synchronizations
+          type: number
+        type:
+          example: linkedin-sales-navigator
+          type: string
+        updated_at:
+          example: "null"
+          type: string
+      required:
+      - id
+      - status
+      - status_code_description
+      - status_code_info
+      - type
+      type: object
+    AccountUpdated:
+      example:
+        status_code_info: pending
+        updated_at: 2020-11-15T12:33:00
+        total_synchronizations: 0.8008281904610115
+        name: my-cool-account
+        created_at: 2020-11-15T11:33:00
+        status_code_description: your account needs to be synchronized
+        id: 19bb1c73b0d628003dcd888f0820ece0
+        type: linkedin-sales-navigator
+        object: account
+        last_synchronization_time: "null"
+        status: 100
+      properties:
+        id:
+          example: 19bb1c73b0d628003dcd888f0820ece0
+          type: string
+        object:
+          example: account
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        last_synchronization_time:
+          example: "null"
+          type: string
+        name:
+          example: my-cool-account
+          type: string
+        status:
+          example: 100
+          type: number
+        status_code_info:
+          example: pending
+          type: string
+        status_code_description:
+          example: your account needs to be synchronized
+          type: string
+        type:
+          example: linkedin-sales-navigator
+          type: string
+        total_synchronizations:
+          description: total synchronizations
+          type: number
+        updated_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T12:33:00
+          type: string
+      required:
+      - id
+      - status
+      - status_code_description
+      - status_code_info
+      - type
+      type: object
+    AccountRefreshed:
+      example:
+        status_code_info: synchronizing
+        updated_at: 2020-11-15T12:33:00
+        total_synchronizations: 1
+        name: my-cool-account
+        created_at: 2020-11-15T11:33:00
+        status_code_description: your account is currently being synchronized
+        id: 19bb1c73b0d628003dcd888f0820ece0
+        type: linkedin-sales-navigator
+        object: account
+        last_synchronization_time: 2020-11-15T13:33:00
+        status: 300
+      properties:
+        id:
+          example: 19bb1c73b0d628003dcd888f0820ece0
+          type: string
+        object:
+          example: account
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        last_synchronization_time:
+          example: 2020-11-15T13:33:00
+          type: string
+        name:
+          example: my-cool-account
+          type: string
+        status:
+          example: 300
+          type: number
+        status_code_info:
+          example: synchronizing
+          type: string
+        status_code_description:
+          example: your account is currently being synchronized
+          type: string
+        total_synchronizations:
+          description: total synchronizations
+          example: 1
+          type: number
+        type:
+          example: linkedin-sales-navigator
+          type: string
+        updated_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T12:33:00
+          type: string
+      required:
+      - id
+      - status
+      - status_code_description
+      - status_code_info
+      - type
+      type: object
+    AccountDeleted:
+      example:
+        deleted: true
+        id: 19bb1c73b0d628003dcd888f0820ece0
+        object: account
+      properties:
+        id:
+          example: 19bb1c73b0d628003dcd888f0820ece0
+          type: string
+        object:
+          example: account
+          type: string
+        deleted:
+          example: true
+          type: boolean
+      type: object
+    RunTask:
+      example:
+        is_done: true
+        last_page: 1
+        created_at: 2020-11-15T11:33:00
+        run: d2ddea18f00665ce8623e36bd4e3c7c5
+        total_pages: 1
+        total_results: 25
+        duration: 63
+        task: 289dff07669d7a23de0ef88d2f7129e7
+        last_result: 25
+        started_at: 2020-11-15T11:32:00
+        is_error: "False"
+        id: 05a671c66aefea124cc08b76ea6d30bb
+        ended_at: 2020-11-15T11:34:03
+        object: runtask
+      properties:
+        id:
+          example: 05a671c66aefea124cc08b76ea6d30bb
+          type: string
+        object:
+          example: runtask
+          type: string
+        created_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:33:00
+          type: string
+        duration:
+          example: 63
+          type: number
+        ended_at:
+          description: date of creation (ISO8601 format)`
+          example: 2020-11-15T11:34:03
+          type: string
+        is_done:
+          type: boolean
+        is_error:
+          example: "False"
+          type: string
+        last_page:
+          example: 1
+          type: number
+        last_result:
+          example: 25
+          type: number
+        task:
+          example: 289dff07669d7a23de0ef88d2f7129e7
+          type: string
+        run:
+          example: d2ddea18f00665ce8623e36bd4e3c7c5
+          type: string
+        started_at:
+          description: date of creation (ISO8601 format)
+          example: 2020-11-15T11:32:00
+          type: string
+        total_pages:
+          example: 1
+          type: number
+        total_results:
+          example: 25
+          type: number
+      type: object
+    EmptiedCluster:
+      example:
+        emptied: true
+        id: ecd72cc09f5405c77b635efb9c757b82
+        object: cluster
+      properties:
+        id:
+          example: ecd72cc09f5405c77b635efb9c757b82
+          type: string
+        object:
+          example: cluster
+          type: string
+        emptied:
+          example: true
+          type: boolean
+      type: object
+    List_Clusters_200_response:
+      example:
+        data:
+        - ""
+        - ""
+        count: 1
+        limit: 10
+        page: 1
+      properties:
+        count:
+          example: 1
+          type: number
+        page:
+          description: page number
+          example: 1
+          type: number
+        limit:
+          description: number of items returned max
+          example: 10
+          type: number
+        data:
+          items: {}
+          type: array
+      required:
+      - limit
+      - page
+      type: object
+    Create_Task_request:
+      properties:
+        cluster:
+          example: 6fbfd5e68d3306e51350bea0232f8fa5
+          type: string
+        tasks:
+          items: {}
+          type: array
+      required:
+      - cluster
+      type: object
+    List_Tasks_request:
+      properties:
+        cluster:
+          example: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+          type: string
+      type: object
+    Launch_Run_request:
+      properties:
+        cluster:
+          example: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+          type: string
+      required:
+      - cluster
+      type: object
+    List_RunTasks_request:
+      properties:
+        run:
+          example: '''d2ddea18f00665ce8623e36bd4e3c7c5'''
+          type: string
+        task:
+          example: '''289dff07669d7a23de0ef88d2f7129e7'''
+          type: string
+      type: object
+    List_Results_request:
+      properties:
+        cluster:
+          example: '''65b9eea6e1cc6bb9f0cd2a47751a186f'''
+          type: string
+        run:
+          example: '''d2ddea18f00665ce8623e36bd4e3c7c5'''
+          type: string
+        task:
+          example: '''2e3c3b47a66fe2faa20c78a3a130b9e3'''
+          type: string
+      required:
+      - cluster
+      type: object
+    List_Schedules_200_response:
+      example:
+        count: 1
+        limit: 10
+        page: 1
+        runs:
+        - ""
+        - ""
+      properties:
+        count:
+          example: 1
+          type: number
+        page:
+          description: page number
+          example: 1
+          type: number
+        limit:
+          description: number of items returned max
+          example: 10
+          type: number
+        runs:
+          items: {}
+          type: array
+      required:
+      - limit
+      - page
+      type: object
+    ClusterCrawlerParams_dropcontact:
+      example:
+        description: "if true, will enrich profile with dropcontact data e.g. mail,\
+          \ phone, siret"
+        type: boolean
+        required: true
+      properties:
+        description:
+          example: "if true, will enrich profile with dropcontact data e.g. mail,\
+            \ phone, siret"
+          type: string
+        type:
+          example: boolean
+          type: string
+        required:
+          type: boolean
+      type: object
+    TaskCrawlerParams_max_pages:
+      example:
+        description: max. pages the crawler will reach
+        type: int
+        required: true
+      properties:
+        description:
+          example: max. pages the crawler will reach
+          type: string
+        type:
+          example: int
+          type: string
+        required:
+          type: boolean
+      type: object
+    TaskCrawlerParams_results_per_page:
+      example:
+        description: total results collected per page
+        type: int
+        required: true
+      properties:
+        description:
+          example: total results collected per page
+          type: string
+        type:
+          example: int
+          type: string
+        required:
+          type: boolean
+      type: object
+    TaskCrawlerParams_url:
+      example:
+        description: starting linkedin search URL
+        type: string
+        required: true
+      properties:
+        description:
+          example: starting linkedin search URL
+          type: string
+        type:
+          example: string
+          type: string
+        required:
+          example: true
+          type: boolean
+      type: object
+    AccountCrawlerParams_email:
+      example:
+        description: email of the account
+        type: string
+        required: true
+      properties:
+        description:
+          example: email of the account
+          type: string
+        type:
+          example: string
+          type: string
+        required:
+          example: true
+          type: boolean
+      type: object
+    AccountCrawlerParams_password:
+      example:
+        description: password of the account
+        type: string
+        required: true
+      properties:
+        description:
+          example: password of the account
+          type: string
+        type:
+          example: string
+          type: string
+        required:
+          example: true
+          type: boolean
+      type: object
