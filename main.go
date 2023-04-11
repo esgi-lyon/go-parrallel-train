@@ -1,109 +1,115 @@
 package main
 
 import (
-	//"bufio"
+	// "bufio"
 	"encoding/csv"
-	//"io"
+	"io"
 	"log"
 	"os"
 
 	"github.com/mitchellh/mapstructure"
-
 	//"github.com/loic-roux-404/go-parrallel-train/pkg/lobstrio"
 	//"github.com/loic-roux-404/go-parrallel-train/pkg/scrape"
 )
 
 type Asset struct {
-	Id    string
-	InputUrl     string
-	Object string
-	AnnonceId string
-	ApiKey string
-	Adtype string
-	Area string
-	CategoryName string
-	Currency string
-	City string
-	ChargesIncluded string
-	Capacity string
-	Description string
-	Department string
-	DpeString string
-	DpeInt string
-	Dpe string
-	District string
-	DetailedTime string
-	ExpirationDate string
+	Id                   string
+	InputUrl             string
+	Object               string
+	AnnonceId            string
+	ApiKey               string
+	Adtype               string
+	Area                 string
+	CategoryName         string
+	Currency             string
+	City                 string
+	ChargesIncluded      string
+	Capacity             string
+	Description          string
+	Department           string
+	DpeString            string
+	DpeInt               string
+	Dpe                  string
+	District             string
+	DetailedTime         string
+	ExpirationDate       string
 	FirstPublicationDate string
-	Floor string
-	Furnished string
-	GesString string
-	GesInt string
-	Ges string
-	HasPhone string
-	HasSwimmingPool string
-	HasOnlineShop string
-	IsExclusive string
-	IsActive string
-	IsDeactivated string
-	IsDetailed string
-	Lat string
-	Lng string
-	LastPublicationDate string
-	Mail string
-	MoreDetails string
-	NoSalesmen string
-	OwnerType string
-	OwnerName string
-	OnlineShopUrl string
-	OwnerStoreId string
-	OwnerSiren string
-	Price string
-	Picture string
-	Pictures string
-	PostalCode string
-	Phone string
-	PhoneFromUser string
-	Region string
-	RoomCount string
-	RealEstateType string
-	SleepingroomCount string
-	SquareMetterPrice string
-	StatusCode string
-	Title string
-	Url string
-	Urgent string
-	CollectedAt string
-	UserId string
-	Pieces string
-	Surface string
-	Honoraires string
-	Reference string
-	TypeDeBien string
-	ClasseEnergie string
-	NombreDeChambres string
-	SurfaceDuTerrain string
-	Ascenseur string
-	EtageDuBien string
-	PlacesDeParking string
+	Floor                string
+	Furnished            string
+	GesString            string
+	GesInt               string
+	Ges                  string
+	HasPhone             string
+	HasSwimmingPool      string
+	HasOnlineShop        string
+	IsExclusive          string
+	IsActive             string
+	IsDeactivated        string
+	IsDetailed           string
+	Lat                  string
+	Lng                  string
+	LastPublicationDate  string
+	Mail                 string
+	MoreDetails          string
+	NoSalesmen           string
+	OwnerType            string
+	OwnerName            string
+	OnlineShopUrl        string
+	OwnerStoreId         string
+	OwnerSiren           string
+	Price                string
+	Picture              string
+	Pictures             string
+	PostalCode           string
+	Phone                string
+	PhoneFromUser        string
+	Region               string
+	RoomCount            string
+	RealEstateType       string
+	SleepingroomCount    string
+	SquareMetterPrice    string
+	StatusCode           string
+	Title                string
+	Url                  string
+	Urgent               string
+	CollectedAt          string
+	UserId               string
+	Pieces               string
+	Surface              string
+	Honoraires           string
+	Reference            string
+	TypeDeBien           string
+	ClasseEnergie        string
+	NombreDeChambres     string
+	SurfaceDuTerrain     string
+	Ascenseur            string
+	EtageDuBien          string
+	PlacesDeParking      string
 }
 
 func check(err error) {
-    if err != nil {
-        log.Panic(err)
-    }
+	if err != nil {
+		log.Panic(err)
+	}
 }
 
-func main()  {
-	for _, csv_file := range []string{
-		"./data/Leboncoin Listings Search Export_20230418_1016.csv",
-		"./data/Leboncoin Listings Search Export_20230411_1016.csv",
-		"./data/Leboncoin Listings Search Export_20230425_1016.csv",
-	} {
-		dat, err := os.Open(csv_file)
-    	check(err)
+func NewReader(r io.Reader) *csv.Reader {
+	return &csv.Reader{
+		Comma: ',',
+	}
+}
 
-		reader := csv.NewReader(dat)
+func main() {
+	for _, csv_file := range []string{
+		"./data/Leboncoin_Listings_Search_Export_20230418_1016.csv",
+		"./data/Leboncoin_Listings_Search_Export_20230411_1016.csv",
+		"./data/Leboncoin_Listings_Search_Export_20230425_1016.csv",
+	} {
+		file, err := os.Open(csv_file)
+		check(err)
+
+		reader, err := csv.NewReader(file).ReadAll()
+		check(err)
 
 		var data Asset
 
@@ -122,5 +128,11 @@ func main()  {
 		}
 
 		log.Println(data)
+
+		// defer dat.Close()
 	}
+}
+
+func channel() {
+	//ch := make(chan []Asset)
 }
