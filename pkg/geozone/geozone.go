@@ -1,6 +1,5 @@
-package scrape
+package geozone
 
-	
 type LebonCoinGeoZone struct {
     name string
     childs []LebonCoinGeoZone
