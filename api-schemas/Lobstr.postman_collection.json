@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "8ba0631a-73ad-40f4-8fae-59c9b27cf8f5",
 		"name": "Lobstr",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "9256698"
 	},
 	"item": [
@@ -17,8 +17,23 @@
 						"type": "text"
 					}
 				],
+				"url": "https://api.lobstr.io/v1/clusters/{{clusterId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "List cluster",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "https://api.lobstr.io/v1/clusters/?id=9fb56bc8d697ff45d47ad9ed332e262b",
+					"raw": "https://api.lobstr.io/v1/clusters?id={{clusterId}}",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -27,13 +42,12 @@
 					],
 					"path": [
 						"v1",
-						"clusters",
-						""
+						"clusters"
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "9fb56bc8d697ff45d47ad9ed332e262b"
+							"value": "{{clusterId}}"
 						}
 					]
 				}
@@ -55,24 +69,23 @@
 					"mode": "raw",
 					"raw": "{\r\n    \"cluster\": \"9fb56bc8d697ff45d47ad9ed332e262b\",\r\n    \"tasks\": [\r\n        {\r\n            \"url\": \"https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain\"\r\n        }\r\n    ]\r\n}"
 				},
-				"url": {
-					"raw": "https://api.lobstr.io/v1/tasks",
-					"protocol": "https",
-					"host": [
-						"api",
-						"lobstr",
-						"io"
-					],
-					"path": [
-						"v1",
-						"tasks"
-					]
-				}
+				"url": "https://api.lobstr.io/v1/tasks"
 			},
 			"response": []
 		},
 		{
 			"name": "Update cluster",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {}
 			},
@@ -88,20 +101,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "https://api.lobstr.io/v1/clusters/9fb56bc8d697ff45d47ad9ed332e262b",
-					"protocol": "https",
-					"host": [
-						"api",
-						"lobstr",
-						"io"
-					],
-					"path": [
-						"v1",
-						"clusters",
-						"9fb56bc8d697ff45d47ad9ed332e262b"
-					]
-				}
+				"url": "https://api.lobstr.io/v1/clusters/{{clusterId}}"
 			},
 			"response": []
 		},
@@ -130,21 +130,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "https://api.lobstr.io/v1/tasks/292461f69940b3bfa9672092f6601acb/activate",
-					"protocol": "https",
-					"host": [
-						"api",
-						"lobstr",
-						"io"
-					],
-					"path": [
-						"v1",
-						"tasks",
-						"292461f69940b3bfa9672092f6601acb",
-						"activate"
-					]
-				}
+				"url": "https://api.lobstr.io/v1/tasks/{{taskId}}/activate"
 			},
 			"response": []
 		},
@@ -168,19 +154,7 @@
 					"mode": "raw",
 					"raw": "{\r\n  \"cluster\": \"9fb56bc8d697ff45d47ad9ed332e262b\"\r\n}"
 				},
-				"url": {
-					"raw": "https://api.lobstr.io/v1/runs",
-					"protocol": "https",
-					"host": [
-						"api",
-						"lobstr",
-						"io"
-					],
-					"path": [
-						"v1",
-						"runs"
-					]
-				}
+				"url": "https://api.lobstr.io/v1/runs"
 			},
 			"response": []
 		},
@@ -256,20 +230,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "https://api.lobstr.io/v1/runs/ce545f63b4fa4a6988c929dfefea243e",
-					"protocol": "https",
-					"host": [
-						"api",
-						"lobstr",
-						"io"
-					],
-					"path": [
-						"v1",
-						"runs",
-						"ce545f63b4fa4a6988c929dfefea243e"
-					]
-				}
+				"url": "https://api.lobstr.io/v1/runs/{{runId}}"
 			},
 			"response": []
 		},
@@ -296,43 +257,18 @@
 					"mode": "raw",
 					"raw": "{\r\n  \"cluster\": \"9fb56bc8d697ff45d47ad9ed332e262b\"\r\n}"
 				},
-				"url": {
-					"raw": "https://api.lobstr.io/v1/results/16c0e52bd30340caa107c80f8a2e21c2",
-					"protocol": "https",
-					"host": [
-						"api",
-						"lobstr",
-						"io"
-					],
-					"path": [
-						"v1",
-						"results",
-						"16c0e52bd30340caa107c80f8a2e21c2"
-					]
-				}
+				"url": "https://api.lobstr.io/v1/results/{{resultId}}"
 			},
 			"response": []
 		}
 	],
 	"auth": {
 		"type": "apikey",
-		"apikey": [
-			{
-				"key": "key",
-				"value": "Authorization",
-				"type": "string"
-			},
-			{
-				"key": "value",
-				"value": "Token dc71bf7d4c072a9565c06d62b0945f55cb1f35f7",
-				"type": "string"
-			},
-			{
-				"key": "in",
-				"value": "header",
-				"type": "string"
-			}
-		]
+		"apikey": {
+			"key": "Authorization",
+			"value": "Token dc71bf7d4c072a9565c06d62b0945f55cb1f35f7",
+			"in": "header"
+		}
 	},
 	"event": [
 		{

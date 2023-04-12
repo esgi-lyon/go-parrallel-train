@@ -77,14 +77,15 @@ All URIs are relative to *https://api.lobstr.io/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*MiscApi* | [**Activatetask**](docs/MiscApi.md#activatetask) | **Post** /tasks/292461f69940b3bfa9672092f6601acb/activate | Activate task
+*MiscApi* | [**Activatetask**](docs/MiscApi.md#activatetask) | **Post** /tasks/{taskId}/activate | Activate task
 *MiscApi* | [**CreatetaskNotadded**](docs/MiscApi.md#createtasknotadded) | **Post** /tasks | Create task (not added)
-*MiscApi* | [**Getcluster**](docs/MiscApi.md#getcluster) | **Get** /clusters | Get cluster
-*MiscApi* | [**Getresult**](docs/MiscApi.md#getresult) | **Get** /results/16c0e52bd30340caa107c80f8a2e21c2 | Get result
+*MiscApi* | [**Getcluster**](docs/MiscApi.md#getcluster) | **Get** /clusters/{clusterId} | Get cluster
+*MiscApi* | [**Getresult**](docs/MiscApi.md#getresult) | **Get** /results/{resultId} | Get result
+*MiscApi* | [**Listcluster**](docs/MiscApi.md#listcluster) | **Get** /clusters | List cluster
 *MiscApi* | [**Listruns**](docs/MiscApi.md#listruns) | **Get** /runs | List runs
 *MiscApi* | [**Runcluster**](docs/MiscApi.md#runcluster) | **Post** /runs | Run cluster
-*MiscApi* | [**Updatecluster**](docs/MiscApi.md#updatecluster) | **Post** /clusters/9fb56bc8d697ff45d47ad9ed332e262b | Update cluster
-*MiscApi* | [**Viewrun**](docs/MiscApi.md#viewrun) | **Get** /runs/ce545f63b4fa4a6988c929dfefea243e | View run
+*MiscApi* | [**Updatecluster**](docs/MiscApi.md#updatecluster) | **Post** /clusters/{clusterId} | Update cluster
+*MiscApi* | [**Viewrun**](docs/MiscApi.md#viewrun) | **Get** /runs/{runId} | View run
 
 
 ## Documentation For Models

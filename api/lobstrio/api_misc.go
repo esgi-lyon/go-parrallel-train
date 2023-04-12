@@ -16,6 +16,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 
@@ -26,6 +27,7 @@ type ApiActivatetaskRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
 	authorization *string
+	taskId string
 	activatetaskRequest *ActivatetaskRequest
 }
 
@@ -49,12 +51,14 @@ func (r ApiActivatetaskRequest) Execute() (*http.Response, error) {
 Activatetask Activate task
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId 
  @return ApiActivatetaskRequest
 */
-func (a *MiscApiService) Activatetask(ctx context.Context) ApiActivatetaskRequest {
+func (a *MiscApiService) Activatetask(ctx context.Context, taskId string) ApiActivatetaskRequest {
 	return ApiActivatetaskRequest{
 		ApiService: a,
 		ctx: ctx,
+		taskId: taskId,
 	}
 }
 
@@ -71,7 +75,8 @@ func (a *MiscApiService) ActivatetaskExecute(r ApiActivatetaskRequest) (*http.Re
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tasks/292461f69940b3bfa9672092f6601acb/activate"
+	localVarPath := localBasePath + "/tasks/{taskId}/activate"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -246,14 +251,8 @@ func (a *MiscApiService) CreatetaskNotaddedExecute(r ApiCreatetaskNotaddedReques
 type ApiGetclusterRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
-	id *string
 	contentType *string
-}
-
-// 
-func (r ApiGetclusterRequest) Id(id string) ApiGetclusterRequest {
-	r.id = &id
-	return r
+	clusterId string
 }
 
 // 
@@ -270,12 +269,14 @@ func (r ApiGetclusterRequest) Execute() (*http.Response, error) {
 Getcluster Get cluster
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param clusterId 
  @return ApiGetclusterRequest
 */
-func (a *MiscApiService) Getcluster(ctx context.Context) ApiGetclusterRequest {
+func (a *MiscApiService) Getcluster(ctx context.Context, clusterId string) ApiGetclusterRequest {
 	return ApiGetclusterRequest{
 		ApiService: a,
 		ctx: ctx,
+		clusterId: clusterId,
 	}
 }
 
@@ -292,19 +293,16 @@ func (a *MiscApiService) GetclusterExecute(r ApiGetclusterRequest) (*http.Respon
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/clusters"
+	localVarPath := localBasePath + "/clusters/{clusterId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"clusterId"+"}", url.PathEscape(parameterValueToString(r.clusterId, "clusterId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.id == nil {
-		return nil, reportError("id is required and must be specified")
-	}
 	if r.contentType == nil {
 		return nil, reportError("contentType is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -370,6 +368,7 @@ type ApiGetresultRequest struct {
 	ApiService *MiscApiService
 	authorization *string
 	contentType *string
+	resultId string
 }
 
 // 
@@ -392,12 +391,14 @@ func (r ApiGetresultRequest) Execute() (*http.Response, error) {
 Getresult Get result
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param resultId 
  @return ApiGetresultRequest
 */
-func (a *MiscApiService) Getresult(ctx context.Context) ApiGetresultRequest {
+func (a *MiscApiService) Getresult(ctx context.Context, resultId string) ApiGetresultRequest {
 	return ApiGetresultRequest{
 		ApiService: a,
 		ctx: ctx,
+		resultId: resultId,
 	}
 }
 
@@ -414,7 +415,8 @@ func (a *MiscApiService) GetresultExecute(r ApiGetresultRequest) (*http.Response
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/results/16c0e52bd30340caa107c80f8a2e21c2"
+	localVarPath := localBasePath + "/results/{resultId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"resultId"+"}", url.PathEscape(parameterValueToString(r.resultId, "resultId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -445,6 +447,128 @@ func (a *MiscApiService) GetresultExecute(r ApiGetresultRequest) (*http.Response
 	}
 	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	parameterAddToHeaderOrQuery(localVarHeaderParams, "Content-Type", r.contentType, "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListclusterRequest struct {
+	ctx context.Context
+	ApiService *MiscApiService
+	id *string
+	contentType *string
+}
+
+// 
+func (r ApiListclusterRequest) Id(id string) ApiListclusterRequest {
+	r.id = &id
+	return r
+}
+
+// 
+func (r ApiListclusterRequest) ContentType(contentType string) ApiListclusterRequest {
+	r.contentType = &contentType
+	return r
+}
+
+func (r ApiListclusterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListclusterExecute(r)
+}
+
+/*
+Listcluster List cluster
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListclusterRequest
+*/
+func (a *MiscApiService) Listcluster(ctx context.Context) ApiListclusterRequest {
+	return ApiListclusterRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *MiscApiService) ListclusterExecute(r ApiListclusterRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Listcluster")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/clusters"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.id == nil {
+		return nil, reportError("id is required and must be specified")
+	}
+	if r.contentType == nil {
+		return nil, reportError("contentType is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Content-Type", r.contentType, "")
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKey"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -715,6 +839,7 @@ func (a *MiscApiService) RunclusterExecute(r ApiRunclusterRequest) (*http.Respon
 type ApiUpdateclusterRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
+	clusterId string
 	updateclusterRequest *UpdateclusterRequest
 }
 
@@ -732,12 +857,14 @@ func (r ApiUpdateclusterRequest) Execute() (*http.Response, error) {
 Updatecluster Update cluster
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param clusterId 
  @return ApiUpdateclusterRequest
 */
-func (a *MiscApiService) Updatecluster(ctx context.Context) ApiUpdateclusterRequest {
+func (a *MiscApiService) Updatecluster(ctx context.Context, clusterId string) ApiUpdateclusterRequest {
 	return ApiUpdateclusterRequest{
 		ApiService: a,
 		ctx: ctx,
+		clusterId: clusterId,
 	}
 }
 
@@ -754,7 +881,8 @@ func (a *MiscApiService) UpdateclusterExecute(r ApiUpdateclusterRequest) (*http.
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/clusters/9fb56bc8d697ff45d47ad9ed332e262b"
+	localVarPath := localBasePath + "/clusters/{clusterId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"clusterId"+"}", url.PathEscape(parameterValueToString(r.clusterId, "clusterId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -829,6 +957,7 @@ type ApiViewrunRequest struct {
 	ApiService *MiscApiService
 	authorization *string
 	contentType *string
+	runId string
 }
 
 // 
@@ -851,12 +980,14 @@ func (r ApiViewrunRequest) Execute() (*http.Response, error) {
 Viewrun View run
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param runId 
  @return ApiViewrunRequest
 */
-func (a *MiscApiService) Viewrun(ctx context.Context) ApiViewrunRequest {
+func (a *MiscApiService) Viewrun(ctx context.Context, runId string) ApiViewrunRequest {
 	return ApiViewrunRequest{
 		ApiService: a,
 		ctx: ctx,
+		runId: runId,
 	}
 }
 
@@ -873,7 +1004,8 @@ func (a *MiscApiService) ViewrunExecute(r ApiViewrunRequest) (*http.Response, er
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/runs/ce545f63b4fa4a6988c929dfefea243e"
+	localVarPath := localBasePath + "/runs/{runId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"runId"+"}", url.PathEscape(parameterValueToString(r.runId, "runId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

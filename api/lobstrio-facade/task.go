@@ -8,18 +8,20 @@ import (
 )
 
 type TaskResult struct {
-	DuplicatedCount int `json:"duplicated_count"`
-	Tasks []TaskDto `json:"tasks"`
+	DuplicatedCount int       `json:"duplicated_count"`
+	Tasks           []TaskDto `json:"tasks"`
 }
+
 type Params struct {
 	URL string `json:"url"`
 }
+
 type TaskDto struct {
-	ID string `json:"id"`
-	CreatedAt string `json:"created_at"`
-	IsActive bool `json:"is_active"`
-	Params Params `json:"params"`
-	Object string `json:"object"`
+	ID        string              `json:"id"`
+	CreatedAt string              `json:"created_at"`
+	IsActive  bool                `json:"is_active"`
+	Params    ClusterDtoParams    `json:"params"`
+	Object    string              `json:"object"`
 }
 
 func CreateTask(id string, url string) *TaskResult {

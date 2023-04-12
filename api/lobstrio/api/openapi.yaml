@@ -11,20 +11,11 @@ tags:
 - description: ""
   name: Misc
 paths:
-  /clusters:
+  /clusters/{clusterId}:
     get:
       deprecated: false
       operationId: Getcluster
       parameters:
-      - description: ""
-        explode: true
-        in: query
-        name: id
-        required: true
-        schema:
-          example: 9fb56bc8d697ff45d47ad9ed332e262b
-          type: string
-        style: form
       - description: ""
         explode: false
         in: header
@@ -36,39 +27,32 @@ paths:
           example: application/json
           type: string
         style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+        style: simple
       responses:
         "200":
           description: ""
       summary: Get cluster
       tags:
       - Misc
-  /tasks:
-    post:
-      deprecated: false
-      operationId: Createtask(notadded)
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            example:
-              cluster: 9fb56bc8d697ff45d47ad9ed332e262b
-              tasks:
-              - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
-            schema:
-              $ref: '#/components/schemas/Createtask_notadded__request'
-        description: ""
-        required: true
-      responses:
-        "200":
-          description: ""
-      summary: Create task (not added)
-      tags:
-      - Misc
-  /clusters/9fb56bc8d697ff45d47ad9ed332e262b:
     post:
       deprecated: false
       operationId: Updatecluster
-      parameters: []
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+        style: simple
       requestBody:
         content:
           application/json:
@@ -96,7 +80,60 @@ paths:
       summary: Update cluster
       tags:
       - Misc
-  /tasks/292461f69940b3bfa9672092f6601acb/activate:
+  /clusters:
+    get:
+      deprecated: false
+      operationId: Listcluster
+      parameters:
+      - description: ""
+        explode: true
+        in: query
+        name: id
+        required: true
+        schema:
+          example: "{{clusterId}}"
+          type: string
+        style: form
+      - description: ""
+        explode: false
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          example: application/json
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List cluster
+      tags:
+      - Misc
+  /tasks:
+    post:
+      deprecated: false
+      operationId: Createtask(notadded)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+              tasks:
+              - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
+            schema:
+              $ref: '#/components/schemas/Createtask_notadded__request'
+        description: ""
+        required: true
+      responses:
+        "200":
+          description: ""
+      summary: Create task (not added)
+      tags:
+      - Misc
+  /tasks/{taskId}/activate:
     post:
       deprecated: false
       operationId: Activatetask
@@ -108,6 +145,14 @@ paths:
         required: true
         schema:
           example: Token 85740612a05ece90fb7bbbf7b507947ffd530cf8
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: taskId
+        required: true
+        schema:
           type: string
         style: simple
       requestBody:
@@ -209,7 +254,7 @@ paths:
       summary: Run cluster
       tags:
       - Misc
-  /runs/ce545f63b4fa4a6988c929dfefea243e:
+  /runs/{runId}:
     get:
       deprecated: false
       operationId: Viewrun
@@ -234,6 +279,14 @@ paths:
           example: application/json
           type: string
         style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: runId
+        required: true
+        schema:
+          type: string
+        style: simple
       responses:
         "200":
           description: ""
@@ -241,7 +294,7 @@ paths:
       summary: View run
       tags:
       - Misc
-  /results/16c0e52bd30340caa107c80f8a2e21c2:
+  /results/{resultId}:
     get:
       deprecated: false
       operationId: Getresult
@@ -264,6 +317,14 @@ paths:
           enum:
           - application/json
           example: application/json
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: resultId
+        required: true
+        schema:
           type: string
         style: simple
       responses:
@@ -406,13 +467,6 @@ components:
       - cluster
       title: RunclusterRequest
       type: object
-    Createtask_notadded__request:
-      allOf:
-      - $ref: '#/components/schemas/CreatetasknotaddedRequest'
-      - example:
-          cluster: 9fb56bc8d697ff45d47ad9ed332e262b
-          tasks:
-          - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
     Updatecluster_request:
       allOf:
       - $ref: '#/components/schemas/UpdateclusterRequest'
@@ -430,6 +484,13 @@ components:
             online_shop: false
           accounts: null
           run_notify: on_error
+    Createtask_notadded__request:
+      allOf:
+      - $ref: '#/components/schemas/CreatetasknotaddedRequest'
+      - example:
+          cluster: 9fb56bc8d697ff45d47ad9ed332e262b
+          tasks:
+          - url: https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain
     Activatetask_request:
       allOf:
       - $ref: '#/components/schemas/ActivatetaskRequest'

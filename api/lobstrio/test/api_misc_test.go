@@ -26,7 +26,9 @@ func Test_lobstrio_MiscApiService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.MiscApi.Activatetask(context.Background()).Execute()
+		var taskId string
+
+		httpRes, err := apiClient.MiscApi.Activatetask(context.Background(), taskId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -48,7 +50,9 @@ func Test_lobstrio_MiscApiService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.MiscApi.Getcluster(context.Background()).Execute()
+		var clusterId string
+
+		httpRes, err := apiClient.MiscApi.Getcluster(context.Background(), clusterId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -59,7 +63,20 @@ func Test_lobstrio_MiscApiService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.MiscApi.Getresult(context.Background()).Execute()
+		var resultId string
+
+		httpRes, err := apiClient.MiscApi.Getresult(context.Background(), resultId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test MiscApiService Listcluster", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.MiscApi.Listcluster(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -92,7 +109,9 @@ func Test_lobstrio_MiscApiService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.MiscApi.Updatecluster(context.Background()).Execute()
+		var clusterId string
+
+		httpRes, err := apiClient.MiscApi.Updatecluster(context.Background(), clusterId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -103,7 +122,9 @@ func Test_lobstrio_MiscApiService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.MiscApi.Viewrun(context.Background()).Execute()
+		var runId string
+
+		httpRes, err := apiClient.MiscApi.Viewrun(context.Background(), runId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
