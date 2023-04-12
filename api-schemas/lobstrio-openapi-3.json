@@ -17,8 +17,8 @@
         "tags": [
           "Misc"
         ],
-        "summary": "Get cluster",
-        "operationId": "Getcluster",
+        "summary": "GetCluster",
+        "operationId": "GetCluster",
         "parameters": [
           {
             "name": "Content-Type",
@@ -57,8 +57,8 @@
         "tags": [
           "Misc"
         ],
-        "summary": "Update cluster",
-        "operationId": "Updatecluster",
+        "summary": "UpdateCluster",
+        "operationId": "UpdateCluster",
         "parameters": [
           {
             "name": "clusterId",
@@ -78,7 +78,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/UpdateclusterRequest"
+                    "$ref": "#/components/schemas/UpdateClusterRequest"
                   },
                   {
                     "example": {
@@ -134,8 +134,8 @@
         "tags": [
           "Misc"
         ],
-        "summary": "List cluster",
-        "operationId": "Listcluster",
+        "summary": "ListCluster",
+        "operationId": "ListCluster",
         "parameters": [
           {
             "name": "id",
@@ -178,8 +178,8 @@
         "tags": [
           "Misc"
         ],
-        "summary": "Create task (not added)",
-        "operationId": "Createtask(notadded)",
+        "summary": "CreateTask",
+        "operationId": "CreateTask",
         "parameters": [],
         "requestBody": {
           "description": "",
@@ -188,11 +188,11 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/CreatetasknotaddedRequest"
+                    "$ref": "#/components/schemas/CreateTaskRequest"
                   },
                   {
                     "example": {
-                      "cluster": "9fb56bc8d697ff45d47ad9ed332e262b",
+                      "cluster": "{{clusterId}}",
                       "tasks": [
                         {
                           "url": "https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain"
@@ -203,7 +203,7 @@
                 ]
               },
               "example": {
-                "cluster": "9fb56bc8d697ff45d47ad9ed332e262b",
+                "cluster": "{{clusterId}}",
                 "tasks": [
                   {
                     "url": "https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain"
@@ -223,93 +223,14 @@
         "deprecated": false
       }
     },
-    "/tasks/{taskId}/activate": {
-      "post": {
-        "tags": [
-          "Misc"
-        ],
-        "summary": "Activate task",
-        "operationId": "Activatetask",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8"
-            }
-          },
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/ActivatetaskRequest"
-                  },
-                  {
-                    "example": {
-                      "id": "5269ba2732a95ba5ac7dacb20cd22ab8",
-                      "object": "task",
-                      "is_active": true
-                    }
-                  }
-                ]
-              },
-              "example": {
-                "id": "5269ba2732a95ba5ac7dacb20cd22ab8",
-                "object": "task",
-                "is_active": true
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "deprecated": false,
-        "security": []
-      }
-    },
     "/runs": {
       "post": {
         "tags": [
           "Misc"
         ],
-        "summary": "Run cluster",
-        "operationId": "Runcluster",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8"
-            }
-          }
-        ],
+        "summary": "RunCluster",
+        "operationId": "RunCluster",
+        "parameters": [],
         "requestBody": {
           "description": "",
           "content": {
@@ -317,17 +238,17 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/RunclusterRequest"
+                    "$ref": "#/components/schemas/RunClusterRequest"
                   },
                   {
                     "example": {
-                      "cluster": "9fb56bc8d697ff45d47ad9ed332e262b"
+                      "cluster": "{{clusterId}}"
                     }
                   }
                 ]
               },
               "example": {
-                "cluster": "9fb56bc8d697ff45d47ad9ed332e262b"
+                "cluster": "{{clusterId}}"
               }
             }
           },
@@ -339,15 +260,14 @@
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
+        "deprecated": false
       },
       "get": {
         "tags": [
           "Misc"
         ],
-        "summary": "List runs",
-        "operationId": "Listruns",
+        "summary": "ListRun",
+        "operationId": "ListRun",
         "parameters": [
           {
             "name": "page",
@@ -416,20 +336,9 @@
         "tags": [
           "Misc"
         ],
-        "summary": "View run",
-        "operationId": "Viewrun",
+        "summary": "ViewRun",
+        "operationId": "ViewRun",
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8"
-            }
-          },
           {
             "name": "Content-Type",
             "in": "header",
@@ -461,27 +370,39 @@
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
+        "deprecated": false
       }
     },
-    "/results/{resultId}": {
+    "/results": {
       "get": {
         "tags": [
           "Misc"
         ],
-        "summary": "Get result",
-        "operationId": "Getresult",
+        "summary": "ListResult",
+        "operationId": "ListResult",
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
+            "name": "run",
+            "in": "query",
             "description": "",
             "required": true,
-            "style": "simple",
+            "style": "form",
+            "explode": true,
             "schema": {
               "type": "string",
-              "example": "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8"
+              "example": "{{runId}}"
+            }
+          },
+          {
+            "name": "cluster",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "{{clusterId}}"
             }
           },
           {
@@ -497,16 +418,6 @@
               "type": "string",
               "example": "application/json"
             }
-          },
-          {
-            "name": "resultId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -515,15 +426,14 @@
             "headers": {}
           }
         },
-        "deprecated": false,
-        "security": []
+        "deprecated": false
       }
     }
   },
   "components": {
     "schemas": {
-      "CreatetasknotaddedRequest": {
-        "title": "CreatetasknotaddedRequest",
+      "CreateTaskRequest": {
+        "title": "CreateTaskRequest",
         "required": [
           "cluster",
           "tasks"
@@ -542,7 +452,7 @@
           }
         },
         "example": {
-          "cluster": "9fb56bc8d697ff45d47ad9ed332e262b",
+          "cluster": "{{clusterId}}",
           "tasks": [
             {
               "url": "https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain"
@@ -565,8 +475,8 @@
           "url": "https://www.leboncoin.fr/ventes_immobilieres/offres/auvergne_rhone_alpes/ain"
         }
       },
-      "UpdateclusterRequest": {
-        "title": "UpdateclusterRequest",
+      "UpdateClusterRequest": {
+        "title": "UpdateClusterRequest",
         "required": [
           "name",
           "concurrency",
@@ -667,33 +577,8 @@
           "online_shop": false
         }
       },
-      "ActivatetaskRequest": {
-        "title": "ActivatetaskRequest",
-        "required": [
-          "id",
-          "object",
-          "is_active"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "object": {
-            "type": "string"
-          },
-          "is_active": {
-            "type": "boolean"
-          }
-        },
-        "example": {
-          "id": "5269ba2732a95ba5ac7dacb20cd22ab8",
-          "object": "task",
-          "is_active": true
-        }
-      },
-      "RunclusterRequest": {
-        "title": "RunclusterRequest",
+      "RunClusterRequest": {
+        "title": "RunClusterRequest",
         "required": [
           "cluster"
         ],
@@ -704,7 +589,7 @@
           }
         },
         "example": {
-          "cluster": "9fb56bc8d697ff45d47ad9ed332e262b"
+          "cluster": "{{clusterId}}"
         }
       }
     },

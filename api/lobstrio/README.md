@@ -77,27 +77,24 @@ All URIs are relative to *https://api.lobstr.io/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*MiscApi* | [**Activatetask**](docs/MiscApi.md#activatetask) | **Post** /tasks/{taskId}/activate | Activate task
-*MiscApi* | [**CreatetaskNotadded**](docs/MiscApi.md#createtasknotadded) | **Post** /tasks | Create task (not added)
-*MiscApi* | [**Getcluster**](docs/MiscApi.md#getcluster) | **Get** /clusters/{clusterId} | Get cluster
-*MiscApi* | [**Getresult**](docs/MiscApi.md#getresult) | **Get** /results/{resultId} | Get result
-*MiscApi* | [**Listcluster**](docs/MiscApi.md#listcluster) | **Get** /clusters | List cluster
-*MiscApi* | [**Listruns**](docs/MiscApi.md#listruns) | **Get** /runs | List runs
-*MiscApi* | [**Runcluster**](docs/MiscApi.md#runcluster) | **Post** /runs | Run cluster
-*MiscApi* | [**Updatecluster**](docs/MiscApi.md#updatecluster) | **Post** /clusters/{clusterId} | Update cluster
-*MiscApi* | [**Viewrun**](docs/MiscApi.md#viewrun) | **Get** /runs/{runId} | View run
+*MiscApi* | [**CreateTask**](docs/MiscApi.md#createtask) | **Post** /tasks | CreateTask
+*MiscApi* | [**GetCluster**](docs/MiscApi.md#getcluster) | **Get** /clusters/{clusterId} | GetCluster
+*MiscApi* | [**ListCluster**](docs/MiscApi.md#listcluster) | **Get** /clusters | ListCluster
+*MiscApi* | [**ListResult**](docs/MiscApi.md#listresult) | **Get** /results | ListResult
+*MiscApi* | [**ListRun**](docs/MiscApi.md#listrun) | **Get** /runs | ListRun
+*MiscApi* | [**RunCluster**](docs/MiscApi.md#runcluster) | **Post** /runs | RunCluster
+*MiscApi* | [**UpdateCluster**](docs/MiscApi.md#updatecluster) | **Post** /clusters/{clusterId} | UpdateCluster
+*MiscApi* | [**ViewRun**](docs/MiscApi.md#viewrun) | **Get** /runs/{runId} | ViewRun
 
 
 ## Documentation For Models
 
- - [ActivatetaskRequest](docs/ActivatetaskRequest.md)
- - [CreatetaskNotaddedRequest](docs/CreatetaskNotaddedRequest.md)
- - [CreatetasknotaddedRequest](docs/CreatetasknotaddedRequest.md)
+ - [CreateTaskRequest](docs/CreateTaskRequest.md)
  - [Params](docs/Params.md)
- - [RunclusterRequest](docs/RunclusterRequest.md)
+ - [RunClusterRequest](docs/RunClusterRequest.md)
  - [Task](docs/Task.md)
- - [UpdateclusterRequest](docs/UpdateclusterRequest.md)
- - [UpdateclusterRequestParams](docs/UpdateclusterRequestParams.md)
+ - [UpdateClusterRequest](docs/UpdateClusterRequest.md)
+ - [UpdateClusterRequestParams](docs/UpdateClusterRequestParams.md)
 
 
 ## Documentation For Authorization

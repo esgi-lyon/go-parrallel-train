@@ -14,37 +14,37 @@ import (
 	"encoding/json"
 )
 
-// checks if the CreatetaskNotaddedRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &CreatetaskNotaddedRequest{}
+// checks if the CreateTaskRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateTaskRequest{}
 
-// CreatetaskNotaddedRequest struct for CreatetaskNotaddedRequest
-type CreatetaskNotaddedRequest struct {
+// CreateTaskRequest struct for CreateTaskRequest
+type CreateTaskRequest struct {
 	Cluster string `json:"cluster"`
 	// 
 	Tasks []Task `json:"tasks"`
 }
 
-// NewCreatetaskNotaddedRequest instantiates a new CreatetaskNotaddedRequest object
+// NewCreateTaskRequest instantiates a new CreateTaskRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreatetaskNotaddedRequest(cluster string, tasks []Task) *CreatetaskNotaddedRequest {
-	this := CreatetaskNotaddedRequest{}
+func NewCreateTaskRequest(cluster string, tasks []Task) *CreateTaskRequest {
+	this := CreateTaskRequest{}
 	this.Cluster = cluster
 	this.Tasks = tasks
 	return &this
 }
 
-// NewCreatetaskNotaddedRequestWithDefaults instantiates a new CreatetaskNotaddedRequest object
+// NewCreateTaskRequestWithDefaults instantiates a new CreateTaskRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewCreatetaskNotaddedRequestWithDefaults() *CreatetaskNotaddedRequest {
-	this := CreatetaskNotaddedRequest{}
+func NewCreateTaskRequestWithDefaults() *CreateTaskRequest {
+	this := CreateTaskRequest{}
 	return &this
 }
 
 // GetCluster returns the Cluster field value
-func (o *CreatetaskNotaddedRequest) GetCluster() string {
+func (o *CreateTaskRequest) GetCluster() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -55,7 +55,7 @@ func (o *CreatetaskNotaddedRequest) GetCluster() string {
 
 // GetClusterOk returns a tuple with the Cluster field value
 // and a boolean to check if the value has been set.
-func (o *CreatetaskNotaddedRequest) GetClusterOk() (*string, bool) {
+func (o *CreateTaskRequest) GetClusterOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -63,12 +63,12 @@ func (o *CreatetaskNotaddedRequest) GetClusterOk() (*string, bool) {
 }
 
 // SetCluster sets field value
-func (o *CreatetaskNotaddedRequest) SetCluster(v string) {
+func (o *CreateTaskRequest) SetCluster(v string) {
 	o.Cluster = v
 }
 
 // GetTasks returns the Tasks field value
-func (o *CreatetaskNotaddedRequest) GetTasks() []Task {
+func (o *CreateTaskRequest) GetTasks() []Task {
 	if o == nil {
 		var ret []Task
 		return ret
@@ -79,7 +79,7 @@ func (o *CreatetaskNotaddedRequest) GetTasks() []Task {
 
 // GetTasksOk returns a tuple with the Tasks field value
 // and a boolean to check if the value has been set.
-func (o *CreatetaskNotaddedRequest) GetTasksOk() ([]Task, bool) {
+func (o *CreateTaskRequest) GetTasksOk() ([]Task, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -87,11 +87,11 @@ func (o *CreatetaskNotaddedRequest) GetTasksOk() ([]Task, bool) {
 }
 
 // SetTasks sets field value
-func (o *CreatetaskNotaddedRequest) SetTasks(v []Task) {
+func (o *CreateTaskRequest) SetTasks(v []Task) {
 	o.Tasks = v
 }
 
-func (o CreatetaskNotaddedRequest) MarshalJSON() ([]byte, error) {
+func (o CreateTaskRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -99,45 +99,45 @@ func (o CreatetaskNotaddedRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o CreatetaskNotaddedRequest) ToMap() (map[string]interface{}, error) {
+func (o CreateTaskRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["cluster"] = o.Cluster
 	toSerialize["tasks"] = o.Tasks
 	return toSerialize, nil
 }
 
-type NullableCreatetaskNotaddedRequest struct {
-	value *CreatetaskNotaddedRequest
+type NullableCreateTaskRequest struct {
+	value *CreateTaskRequest
 	isSet bool
 }
 
-func (v NullableCreatetaskNotaddedRequest) Get() *CreatetaskNotaddedRequest {
+func (v NullableCreateTaskRequest) Get() *CreateTaskRequest {
 	return v.value
 }
 
-func (v *NullableCreatetaskNotaddedRequest) Set(val *CreatetaskNotaddedRequest) {
+func (v *NullableCreateTaskRequest) Set(val *CreateTaskRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableCreatetaskNotaddedRequest) IsSet() bool {
+func (v NullableCreateTaskRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableCreatetaskNotaddedRequest) Unset() {
+func (v *NullableCreateTaskRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableCreatetaskNotaddedRequest(val *CreatetaskNotaddedRequest) *NullableCreatetaskNotaddedRequest {
-	return &NullableCreatetaskNotaddedRequest{value: val, isSet: true}
+func NewNullableCreateTaskRequest(val *CreateTaskRequest) *NullableCreateTaskRequest {
+	return &NullableCreateTaskRequest{value: val, isSet: true}
 }
 
-func (v NullableCreatetaskNotaddedRequest) MarshalJSON() ([]byte, error) {
+func (v NullableCreateTaskRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableCreatetaskNotaddedRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateTaskRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
 )
 
-type TaskResult struct {
+type TaskDtoResult struct {
 	DuplicatedCount int       `json:"duplicated_count"`
 	Tasks           []TaskDto `json:"tasks"`
 }
@@ -17,31 +17,26 @@ type Params struct {
 }
 
 type TaskDto struct {
-	ID        string              `json:"id"`
-	CreatedAt string              `json:"created_at"`
-	IsActive  bool                `json:"is_active"`
-	Params    ClusterDtoParams    `json:"params"`
-	Object    string              `json:"object"`
+	ID        string `json:"id"`
+	CreatedAt string `json:"created_at"`
+	IsActive  bool   `json:"is_active"`
+	Params    Params `json:"params"`
+	Object    string `json:"object"`
 }
 
-func CreateTask(id string, url string) *TaskResult {
-
-	createtaskNotaddedRequest := lobstrio.NewCreatetaskNotaddedRequestWithDefaults()
-	createtaskNotaddedRequest.Cluster = id
-	createtaskNotaddedRequest.Tasks = []lobstrio.Task{
+func CreateTask(id string, url string) *TaskDtoResult {
+	createTaskRequest := lobstrio.NewCreateTaskRequest(id, []lobstrio.Task{
 		{Url: url},
-	}
+	})
 
 	data, err := GetClient().MiscApi.
-		CreatetaskNotadded(context.Background()).
-		CreatetaskNotaddedRequest(*createtaskNotaddedRequest).
+		CreateTask(context.Background()).
+		CreateTaskRequest(*createTaskRequest).
 		Execute()
 
-	if err != nil {
-		panic(err)
-	}
+	checkError(data, err)
 
-	var task *TaskResult
+	var task *TaskDtoResult
 
 	json.NewDecoder(data.Body).Decode(&task)
 

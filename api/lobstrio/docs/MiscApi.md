@@ -4,93 +4,22 @@ All URIs are relative to *https://api.lobstr.io/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**Activatetask**](MiscApi.md#Activatetask) | **Post** /tasks/{taskId}/activate | Activate task
-[**CreatetaskNotadded**](MiscApi.md#CreatetaskNotadded) | **Post** /tasks | Create task (not added)
-[**Getcluster**](MiscApi.md#Getcluster) | **Get** /clusters/{clusterId} | Get cluster
-[**Getresult**](MiscApi.md#Getresult) | **Get** /results/{resultId} | Get result
-[**Listcluster**](MiscApi.md#Listcluster) | **Get** /clusters | List cluster
-[**Listruns**](MiscApi.md#Listruns) | **Get** /runs | List runs
-[**Runcluster**](MiscApi.md#Runcluster) | **Post** /runs | Run cluster
-[**Updatecluster**](MiscApi.md#Updatecluster) | **Post** /clusters/{clusterId} | Update cluster
-[**Viewrun**](MiscApi.md#Viewrun) | **Get** /runs/{runId} | View run
+[**CreateTask**](MiscApi.md#CreateTask) | **Post** /tasks | CreateTask
+[**GetCluster**](MiscApi.md#GetCluster) | **Get** /clusters/{clusterId} | GetCluster
+[**ListCluster**](MiscApi.md#ListCluster) | **Get** /clusters | ListCluster
+[**ListResult**](MiscApi.md#ListResult) | **Get** /results | ListResult
+[**ListRun**](MiscApi.md#ListRun) | **Get** /runs | ListRun
+[**RunCluster**](MiscApi.md#RunCluster) | **Post** /runs | RunCluster
+[**UpdateCluster**](MiscApi.md#UpdateCluster) | **Post** /clusters/{clusterId} | UpdateCluster
+[**ViewRun**](MiscApi.md#ViewRun) | **Get** /runs/{runId} | ViewRun
 
 
 
-## Activatetask
+## CreateTask
 
-> Activatetask(ctx, taskId).Authorization(authorization).ActivatetaskRequest(activatetaskRequest).Execute()
+> CreateTask(ctx).CreateTaskRequest(createTaskRequest).Execute()
 
-Activate task
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
-)
-
-func main() {
-    authorization := "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8" // string | 
-    taskId := "taskId_example" // string | 
-    activatetaskRequest := *openapiclient.NewActivatetaskRequest("Id_example", "Object_example", false) // ActivatetaskRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Activatetask(context.Background(), taskId).Authorization(authorization).ActivatetaskRequest(activatetaskRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Activatetask``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**taskId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiActivatetaskRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
-
- **activatetaskRequest** | [**ActivatetaskRequest**](ActivatetaskRequest.md) |  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## CreatetaskNotadded
-
-> CreatetaskNotadded(ctx).CreatetaskNotaddedRequest(createtaskNotaddedRequest).Execute()
-
-Create task (not added)
+CreateTask
 
 ### Example
 
@@ -105,13 +34,13 @@ import (
 )
 
 func main() {
-    createtaskNotaddedRequest := *openapiclient.NewCreatetaskNotaddedRequest("Cluster_example", []openapiclient.Task{*openapiclient.NewTask("Url_example")}) // CreatetaskNotaddedRequest | 
+    createTaskRequest := *openapiclient.NewCreateTaskRequest("Cluster_example", []openapiclient.Task{*openapiclient.NewTask("Url_example")}) // CreateTaskRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.CreatetaskNotadded(context.Background()).CreatetaskNotaddedRequest(createtaskNotaddedRequest).Execute()
+    r, err := apiClient.MiscApi.CreateTask(context.Background()).CreateTaskRequest(createTaskRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.CreatetaskNotadded``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.CreateTask``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -123,12 +52,12 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiCreatetaskNotaddedRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiCreateTaskRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createtaskNotaddedRequest** | [**CreatetaskNotaddedRequest**](CreatetaskNotaddedRequest.md) |  | 
+ **createTaskRequest** | [**CreateTaskRequest**](CreateTaskRequest.md) |  | 
 
 ### Return type
 
@@ -148,11 +77,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## Getcluster
+## GetCluster
 
-> Getcluster(ctx, clusterId).ContentType(contentType).Execute()
+> GetCluster(ctx, clusterId).ContentType(contentType).Execute()
 
-Get cluster
+GetCluster
 
 ### Example
 
@@ -172,9 +101,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Getcluster(context.Background(), clusterId).ContentType(contentType).Execute()
+    r, err := apiClient.MiscApi.GetCluster(context.Background(), clusterId).ContentType(contentType).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Getcluster``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.GetCluster``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -190,7 +119,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetclusterRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetClusterRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -216,81 +145,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## Getresult
+## ListCluster
 
-> Getresult(ctx, resultId).Authorization(authorization).ContentType(contentType).Execute()
+> ListCluster(ctx).Id(id).ContentType(contentType).Execute()
 
-Get result
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
-)
-
-func main() {
-    authorization := "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8" // string | 
-    contentType := "application/json" // string | 
-    resultId := "resultId_example" // string | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Getresult(context.Background(), resultId).Authorization(authorization).ContentType(contentType).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Getresult``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**resultId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetresultRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
- **contentType** | **string** |  | 
-
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## Listcluster
-
-> Listcluster(ctx).Id(id).ContentType(contentType).Execute()
-
-List cluster
+ListCluster
 
 ### Example
 
@@ -310,9 +169,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Listcluster(context.Background()).Id(id).ContentType(contentType).Execute()
+    r, err := apiClient.MiscApi.ListCluster(context.Background()).Id(id).ContentType(contentType).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Listcluster``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.ListCluster``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -324,7 +183,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListclusterRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListClusterRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -350,11 +209,77 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## Listruns
+## ListResult
 
-> Listruns(ctx).Page(page).Limit(limit).Authorization(authorization).ContentType(contentType).Execute()
+> ListResult(ctx).Run(run).Cluster(cluster).ContentType(contentType).Execute()
 
-List runs
+ListResult
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
+)
+
+func main() {
+    run := "{{runId}}" // string | 
+    cluster := "{{clusterId}}" // string | 
+    contentType := "application/json" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.MiscApi.ListResult(context.Background()).Run(run).Cluster(cluster).ContentType(contentType).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.ListResult``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListResultRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **run** | **string** |  | 
+ **cluster** | **string** |  | 
+ **contentType** | **string** |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListRun
+
+> ListRun(ctx).Page(page).Limit(limit).Authorization(authorization).ContentType(contentType).Execute()
+
+ListRun
 
 ### Example
 
@@ -376,9 +301,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Listruns(context.Background()).Page(page).Limit(limit).Authorization(authorization).ContentType(contentType).Execute()
+    r, err := apiClient.MiscApi.ListRun(context.Background()).Page(page).Limit(limit).Authorization(authorization).ContentType(contentType).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Listruns``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.ListRun``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -390,7 +315,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListrunsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListRunRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -418,75 +343,11 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## Runcluster
+## RunCluster
 
-> Runcluster(ctx).Authorization(authorization).RunclusterRequest(runclusterRequest).Execute()
+> RunCluster(ctx).RunClusterRequest(runClusterRequest).Execute()
 
-Run cluster
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
-)
-
-func main() {
-    authorization := "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8" // string | 
-    runclusterRequest := *openapiclient.NewRunclusterRequest("Cluster_example") // RunclusterRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Runcluster(context.Background()).Authorization(authorization).RunclusterRequest(runclusterRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Runcluster``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiRunclusterRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
- **runclusterRequest** | [**RunclusterRequest**](RunclusterRequest.md) |  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## Updatecluster
-
-> Updatecluster(ctx, clusterId).UpdateclusterRequest(updateclusterRequest).Execute()
-
-Update cluster
+RunCluster
 
 ### Example
 
@@ -501,14 +362,13 @@ import (
 )
 
 func main() {
-    clusterId := "clusterId_example" // string | 
-    updateclusterRequest := *openapiclient.NewUpdateclusterRequest("Name_example", int32(123), false, false, false, *openapiclient.NewUpdateclusterRequestParams("MaxDate_example", int32(123), int32(123), "HoursBack_example", false), "Accounts_example", "RunNotify_example") // UpdateclusterRequest | 
+    runClusterRequest := *openapiclient.NewRunClusterRequest("Cluster_example") // RunClusterRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Updatecluster(context.Background(), clusterId).UpdateclusterRequest(updateclusterRequest).Execute()
+    r, err := apiClient.MiscApi.RunCluster(context.Background()).RunClusterRequest(runClusterRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Updatecluster``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.RunCluster``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -517,20 +377,15 @@ func main() {
 ### Path Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**clusterId** | **string** |  | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiUpdateclusterRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiRunClusterRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-
- **updateclusterRequest** | [**UpdateclusterRequest**](UpdateclusterRequest.md) |  | 
+ **runClusterRequest** | [**RunClusterRequest**](RunClusterRequest.md) |  | 
 
 ### Return type
 
@@ -550,11 +405,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## Viewrun
+## UpdateCluster
 
-> Viewrun(ctx, runId).Authorization(authorization).ContentType(contentType).Execute()
+> UpdateCluster(ctx, clusterId).UpdateClusterRequest(updateClusterRequest).Execute()
 
-View run
+UpdateCluster
 
 ### Example
 
@@ -569,15 +424,82 @@ import (
 )
 
 func main() {
-    authorization := "Token 85740612a05ece90fb7bbbf7b507947ffd530cf8" // string | 
+    clusterId := "clusterId_example" // string | 
+    updateClusterRequest := *openapiclient.NewUpdateClusterRequest("Name_example", int32(123), false, false, false, *openapiclient.NewUpdateClusterRequestParams("MaxDate_example", int32(123), int32(123), "HoursBack_example", false), "Accounts_example", "RunNotify_example") // UpdateClusterRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.MiscApi.UpdateCluster(context.Background(), clusterId).UpdateClusterRequest(updateClusterRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.UpdateCluster``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**clusterId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateClusterRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateClusterRequest** | [**UpdateClusterRequest**](UpdateClusterRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ViewRun
+
+> ViewRun(ctx, runId).ContentType(contentType).Execute()
+
+ViewRun
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
+)
+
+func main() {
     contentType := "application/json" // string | 
     runId := "runId_example" // string | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MiscApi.Viewrun(context.Background(), runId).Authorization(authorization).ContentType(contentType).Execute()
+    r, err := apiClient.MiscApi.ViewRun(context.Background(), runId).ContentType(contentType).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.Viewrun``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MiscApi.ViewRun``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -593,12 +515,11 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiViewrunRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiViewRunRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
  **contentType** | **string** |  | 
 
 
@@ -608,7 +529,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[apiKey](../README.md#apiKey)
 
 ### HTTP request headers
 

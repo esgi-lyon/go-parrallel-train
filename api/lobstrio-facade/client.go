@@ -1,16 +1,27 @@
 package lobstriofacade
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
+	"net/http"
 	"os"
 
 	"github.com/esgi-lyon/go-parrallel-train/api/lobstrio"
 )
 
 func GetClient() *lobstrio.APIClient {
-	cnf := lobstrio.NewConfiguration()
-	cnf.AddDefaultHeader("Authorization", fmt.Sprintf("Token %s", os.Getenv("LOBSTRIOS_API_TOKEN")))
-	cli := lobstrio.NewAPIClient(cnf)
+	var Authorization = "Token " + os.Getenv("LOBSTRIOS_API_TOKEN")
+	cli := lobstrio.NewAPIClient(lobstrio.NewConfiguration())
+	cli.GetConfig().AddDefaultHeader("Authorization", Authorization)
 	
 	return cli
+}
+
+func checkError(response *http.Response, err error) {
+	if err != nil {
+		var body map[string]interface{}
+		json.NewDecoder(response.Body).Decode(&body)
+		log.Panicf(
+			"Error in http request with status %d. Response %v", response.StatusCode, body)
+	}
 }

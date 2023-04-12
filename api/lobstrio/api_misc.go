@@ -23,157 +23,44 @@ import (
 // MiscApiService MiscApi service
 type MiscApiService service
 
-type ApiActivatetaskRequest struct {
+type ApiCreateTaskRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
-	authorization *string
-	taskId string
-	activatetaskRequest *ActivatetaskRequest
+	createTaskRequest *CreateTaskRequest
 }
 
 // 
-func (r ApiActivatetaskRequest) Authorization(authorization string) ApiActivatetaskRequest {
-	r.authorization = &authorization
+func (r ApiCreateTaskRequest) CreateTaskRequest(createTaskRequest CreateTaskRequest) ApiCreateTaskRequest {
+	r.createTaskRequest = &createTaskRequest
 	return r
 }
 
-// 
-func (r ApiActivatetaskRequest) ActivatetaskRequest(activatetaskRequest ActivatetaskRequest) ApiActivatetaskRequest {
-	r.activatetaskRequest = &activatetaskRequest
-	return r
-}
-
-func (r ApiActivatetaskRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ActivatetaskExecute(r)
+func (r ApiCreateTaskRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateTaskExecute(r)
 }
 
 /*
-Activatetask Activate task
+CreateTask CreateTask
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param taskId 
- @return ApiActivatetaskRequest
+ @return ApiCreateTaskRequest
 */
-func (a *MiscApiService) Activatetask(ctx context.Context, taskId string) ApiActivatetaskRequest {
-	return ApiActivatetaskRequest{
-		ApiService: a,
-		ctx: ctx,
-		taskId: taskId,
-	}
-}
-
-// Execute executes the request
-func (a *MiscApiService) ActivatetaskExecute(r ApiActivatetaskRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Activatetask")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/tasks/{taskId}/activate"
-	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return nil, reportError("authorization is required and must be specified")
-	}
-	if r.activatetaskRequest == nil {
-		return nil, reportError("activatetaskRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
-	// body params
-	localVarPostBody = r.activatetaskRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiCreatetaskNotaddedRequest struct {
-	ctx context.Context
-	ApiService *MiscApiService
-	createtaskNotaddedRequest *CreatetaskNotaddedRequest
-}
-
-// 
-func (r ApiCreatetaskNotaddedRequest) CreatetaskNotaddedRequest(createtaskNotaddedRequest CreatetaskNotaddedRequest) ApiCreatetaskNotaddedRequest {
-	r.createtaskNotaddedRequest = &createtaskNotaddedRequest
-	return r
-}
-
-func (r ApiCreatetaskNotaddedRequest) Execute() (*http.Response, error) {
-	return r.ApiService.CreatetaskNotaddedExecute(r)
-}
-
-/*
-CreatetaskNotadded Create task (not added)
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreatetaskNotaddedRequest
-*/
-func (a *MiscApiService) CreatetaskNotadded(ctx context.Context) ApiCreatetaskNotaddedRequest {
-	return ApiCreatetaskNotaddedRequest{
+func (a *MiscApiService) CreateTask(ctx context.Context) ApiCreateTaskRequest {
+	return ApiCreateTaskRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *MiscApiService) CreatetaskNotaddedExecute(r ApiCreatetaskNotaddedRequest) (*http.Response, error) {
+func (a *MiscApiService) CreateTaskExecute(r ApiCreateTaskRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.CreatetaskNotadded")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.CreateTask")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -183,8 +70,8 @@ func (a *MiscApiService) CreatetaskNotaddedExecute(r ApiCreatetaskNotaddedReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createtaskNotaddedRequest == nil {
-		return nil, reportError("createtaskNotaddedRequest is required and must be specified")
+	if r.createTaskRequest == nil {
+		return nil, reportError("createTaskRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -205,7 +92,7 @@ func (a *MiscApiService) CreatetaskNotaddedExecute(r ApiCreatetaskNotaddedReques
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createtaskNotaddedRequest
+	localVarPostBody = r.createTaskRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -248,7 +135,7 @@ func (a *MiscApiService) CreatetaskNotaddedExecute(r ApiCreatetaskNotaddedReques
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetclusterRequest struct {
+type ApiGetClusterRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
 	contentType *string
@@ -256,24 +143,24 @@ type ApiGetclusterRequest struct {
 }
 
 // 
-func (r ApiGetclusterRequest) ContentType(contentType string) ApiGetclusterRequest {
+func (r ApiGetClusterRequest) ContentType(contentType string) ApiGetClusterRequest {
 	r.contentType = &contentType
 	return r
 }
 
-func (r ApiGetclusterRequest) Execute() (*http.Response, error) {
-	return r.ApiService.GetclusterExecute(r)
+func (r ApiGetClusterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetClusterExecute(r)
 }
 
 /*
-Getcluster Get cluster
+GetCluster GetCluster
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param clusterId 
- @return ApiGetclusterRequest
+ @return ApiGetClusterRequest
 */
-func (a *MiscApiService) Getcluster(ctx context.Context, clusterId string) ApiGetclusterRequest {
-	return ApiGetclusterRequest{
+func (a *MiscApiService) GetCluster(ctx context.Context, clusterId string) ApiGetClusterRequest {
+	return ApiGetClusterRequest{
 		ApiService: a,
 		ctx: ctx,
 		clusterId: clusterId,
@@ -281,14 +168,14 @@ func (a *MiscApiService) Getcluster(ctx context.Context, clusterId string) ApiGe
 }
 
 // Execute executes the request
-func (a *MiscApiService) GetclusterExecute(r ApiGetclusterRequest) (*http.Response, error) {
+func (a *MiscApiService) GetClusterExecute(r ApiGetClusterRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Getcluster")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.GetCluster")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -363,119 +250,7 @@ func (a *MiscApiService) GetclusterExecute(r ApiGetclusterRequest) (*http.Respon
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetresultRequest struct {
-	ctx context.Context
-	ApiService *MiscApiService
-	authorization *string
-	contentType *string
-	resultId string
-}
-
-// 
-func (r ApiGetresultRequest) Authorization(authorization string) ApiGetresultRequest {
-	r.authorization = &authorization
-	return r
-}
-
-// 
-func (r ApiGetresultRequest) ContentType(contentType string) ApiGetresultRequest {
-	r.contentType = &contentType
-	return r
-}
-
-func (r ApiGetresultRequest) Execute() (*http.Response, error) {
-	return r.ApiService.GetresultExecute(r)
-}
-
-/*
-Getresult Get result
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param resultId 
- @return ApiGetresultRequest
-*/
-func (a *MiscApiService) Getresult(ctx context.Context, resultId string) ApiGetresultRequest {
-	return ApiGetresultRequest{
-		ApiService: a,
-		ctx: ctx,
-		resultId: resultId,
-	}
-}
-
-// Execute executes the request
-func (a *MiscApiService) GetresultExecute(r ApiGetresultRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Getresult")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/results/{resultId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"resultId"+"}", url.PathEscape(parameterValueToString(r.resultId, "resultId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return nil, reportError("authorization is required and must be specified")
-	}
-	if r.contentType == nil {
-		return nil, reportError("contentType is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
-	parameterAddToHeaderOrQuery(localVarHeaderParams, "Content-Type", r.contentType, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiListclusterRequest struct {
+type ApiListClusterRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
 	id *string
@@ -483,43 +258,43 @@ type ApiListclusterRequest struct {
 }
 
 // 
-func (r ApiListclusterRequest) Id(id string) ApiListclusterRequest {
+func (r ApiListClusterRequest) Id(id string) ApiListClusterRequest {
 	r.id = &id
 	return r
 }
 
 // 
-func (r ApiListclusterRequest) ContentType(contentType string) ApiListclusterRequest {
+func (r ApiListClusterRequest) ContentType(contentType string) ApiListClusterRequest {
 	r.contentType = &contentType
 	return r
 }
 
-func (r ApiListclusterRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ListclusterExecute(r)
+func (r ApiListClusterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListClusterExecute(r)
 }
 
 /*
-Listcluster List cluster
+ListCluster ListCluster
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListclusterRequest
+ @return ApiListClusterRequest
 */
-func (a *MiscApiService) Listcluster(ctx context.Context) ApiListclusterRequest {
-	return ApiListclusterRequest{
+func (a *MiscApiService) ListCluster(ctx context.Context) ApiListClusterRequest {
+	return ApiListClusterRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *MiscApiService) ListclusterExecute(r ApiListclusterRequest) (*http.Response, error) {
+func (a *MiscApiService) ListClusterExecute(r ApiListClusterRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Listcluster")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.ListCluster")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -597,7 +372,140 @@ func (a *MiscApiService) ListclusterExecute(r ApiListclusterRequest) (*http.Resp
 	return localVarHTTPResponse, nil
 }
 
-type ApiListrunsRequest struct {
+type ApiListResultRequest struct {
+	ctx context.Context
+	ApiService *MiscApiService
+	run *string
+	cluster *string
+	contentType *string
+}
+
+// 
+func (r ApiListResultRequest) Run(run string) ApiListResultRequest {
+	r.run = &run
+	return r
+}
+
+// 
+func (r ApiListResultRequest) Cluster(cluster string) ApiListResultRequest {
+	r.cluster = &cluster
+	return r
+}
+
+// 
+func (r ApiListResultRequest) ContentType(contentType string) ApiListResultRequest {
+	r.contentType = &contentType
+	return r
+}
+
+func (r ApiListResultRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListResultExecute(r)
+}
+
+/*
+ListResult ListResult
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListResultRequest
+*/
+func (a *MiscApiService) ListResult(ctx context.Context) ApiListResultRequest {
+	return ApiListResultRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *MiscApiService) ListResultExecute(r ApiListResultRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.ListResult")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/results"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.run == nil {
+		return nil, reportError("run is required and must be specified")
+	}
+	if r.cluster == nil {
+		return nil, reportError("cluster is required and must be specified")
+	}
+	if r.contentType == nil {
+		return nil, reportError("contentType is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "run", r.run, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Content-Type", r.contentType, "")
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKey"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListRunRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
 	page *int32
@@ -607,55 +515,55 @@ type ApiListrunsRequest struct {
 }
 
 // 
-func (r ApiListrunsRequest) Page(page int32) ApiListrunsRequest {
+func (r ApiListRunRequest) Page(page int32) ApiListRunRequest {
 	r.page = &page
 	return r
 }
 
 // 
-func (r ApiListrunsRequest) Limit(limit int32) ApiListrunsRequest {
+func (r ApiListRunRequest) Limit(limit int32) ApiListRunRequest {
 	r.limit = &limit
 	return r
 }
 
 // 
-func (r ApiListrunsRequest) Authorization(authorization string) ApiListrunsRequest {
+func (r ApiListRunRequest) Authorization(authorization string) ApiListRunRequest {
 	r.authorization = &authorization
 	return r
 }
 
 // 
-func (r ApiListrunsRequest) ContentType(contentType string) ApiListrunsRequest {
+func (r ApiListRunRequest) ContentType(contentType string) ApiListRunRequest {
 	r.contentType = &contentType
 	return r
 }
 
-func (r ApiListrunsRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ListrunsExecute(r)
+func (r ApiListRunRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListRunExecute(r)
 }
 
 /*
-Listruns List runs
+ListRun ListRun
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListrunsRequest
+ @return ApiListRunRequest
 */
-func (a *MiscApiService) Listruns(ctx context.Context) ApiListrunsRequest {
-	return ApiListrunsRequest{
+func (a *MiscApiService) ListRun(ctx context.Context) ApiListRunRequest {
+	return ApiListRunRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *MiscApiService) ListrunsExecute(r ApiListrunsRequest) (*http.Response, error) {
+func (a *MiscApiService) ListRunExecute(r ApiListRunRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Listruns")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.ListRun")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -727,51 +635,44 @@ func (a *MiscApiService) ListrunsExecute(r ApiListrunsRequest) (*http.Response, 
 	return localVarHTTPResponse, nil
 }
 
-type ApiRunclusterRequest struct {
+type ApiRunClusterRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
-	authorization *string
-	runclusterRequest *RunclusterRequest
+	runClusterRequest *RunClusterRequest
 }
 
 // 
-func (r ApiRunclusterRequest) Authorization(authorization string) ApiRunclusterRequest {
-	r.authorization = &authorization
+func (r ApiRunClusterRequest) RunClusterRequest(runClusterRequest RunClusterRequest) ApiRunClusterRequest {
+	r.runClusterRequest = &runClusterRequest
 	return r
 }
 
-// 
-func (r ApiRunclusterRequest) RunclusterRequest(runclusterRequest RunclusterRequest) ApiRunclusterRequest {
-	r.runclusterRequest = &runclusterRequest
-	return r
-}
-
-func (r ApiRunclusterRequest) Execute() (*http.Response, error) {
-	return r.ApiService.RunclusterExecute(r)
+func (r ApiRunClusterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunClusterExecute(r)
 }
 
 /*
-Runcluster Run cluster
+RunCluster RunCluster
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiRunclusterRequest
+ @return ApiRunClusterRequest
 */
-func (a *MiscApiService) Runcluster(ctx context.Context) ApiRunclusterRequest {
-	return ApiRunclusterRequest{
+func (a *MiscApiService) RunCluster(ctx context.Context) ApiRunClusterRequest {
+	return ApiRunClusterRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *MiscApiService) RunclusterExecute(r ApiRunclusterRequest) (*http.Response, error) {
+func (a *MiscApiService) RunClusterExecute(r ApiRunClusterRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Runcluster")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.RunCluster")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -781,114 +682,8 @@ func (a *MiscApiService) RunclusterExecute(r ApiRunclusterRequest) (*http.Respon
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return nil, reportError("authorization is required and must be specified")
-	}
-	if r.runclusterRequest == nil {
-		return nil, reportError("runclusterRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
-	// body params
-	localVarPostBody = r.runclusterRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiUpdateclusterRequest struct {
-	ctx context.Context
-	ApiService *MiscApiService
-	clusterId string
-	updateclusterRequest *UpdateclusterRequest
-}
-
-// 
-func (r ApiUpdateclusterRequest) UpdateclusterRequest(updateclusterRequest UpdateclusterRequest) ApiUpdateclusterRequest {
-	r.updateclusterRequest = &updateclusterRequest
-	return r
-}
-
-func (r ApiUpdateclusterRequest) Execute() (*http.Response, error) {
-	return r.ApiService.UpdateclusterExecute(r)
-}
-
-/*
-Updatecluster Update cluster
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param clusterId 
- @return ApiUpdateclusterRequest
-*/
-func (a *MiscApiService) Updatecluster(ctx context.Context, clusterId string) ApiUpdateclusterRequest {
-	return ApiUpdateclusterRequest{
-		ApiService: a,
-		ctx: ctx,
-		clusterId: clusterId,
-	}
-}
-
-// Execute executes the request
-func (a *MiscApiService) UpdateclusterExecute(r ApiUpdateclusterRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Updatecluster")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/clusters/{clusterId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"clusterId"+"}", url.PathEscape(parameterValueToString(r.clusterId, "clusterId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.updateclusterRequest == nil {
-		return nil, reportError("updateclusterRequest is required and must be specified")
+	if r.runClusterRequest == nil {
+		return nil, reportError("runClusterRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -909,7 +704,7 @@ func (a *MiscApiService) UpdateclusterExecute(r ApiUpdateclusterRequest) (*http.
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateclusterRequest
+	localVarPostBody = r.runClusterRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -952,39 +747,148 @@ func (a *MiscApiService) UpdateclusterExecute(r ApiUpdateclusterRequest) (*http.
 	return localVarHTTPResponse, nil
 }
 
-type ApiViewrunRequest struct {
+type ApiUpdateClusterRequest struct {
 	ctx context.Context
 	ApiService *MiscApiService
-	authorization *string
+	clusterId string
+	updateClusterRequest *UpdateClusterRequest
+}
+
+// 
+func (r ApiUpdateClusterRequest) UpdateClusterRequest(updateClusterRequest UpdateClusterRequest) ApiUpdateClusterRequest {
+	r.updateClusterRequest = &updateClusterRequest
+	return r
+}
+
+func (r ApiUpdateClusterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateClusterExecute(r)
+}
+
+/*
+UpdateCluster UpdateCluster
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param clusterId 
+ @return ApiUpdateClusterRequest
+*/
+func (a *MiscApiService) UpdateCluster(ctx context.Context, clusterId string) ApiUpdateClusterRequest {
+	return ApiUpdateClusterRequest{
+		ApiService: a,
+		ctx: ctx,
+		clusterId: clusterId,
+	}
+}
+
+// Execute executes the request
+func (a *MiscApiService) UpdateClusterExecute(r ApiUpdateClusterRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.UpdateCluster")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/clusters/{clusterId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"clusterId"+"}", url.PathEscape(parameterValueToString(r.clusterId, "clusterId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateClusterRequest == nil {
+		return nil, reportError("updateClusterRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateClusterRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKey"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiViewRunRequest struct {
+	ctx context.Context
+	ApiService *MiscApiService
 	contentType *string
 	runId string
 }
 
 // 
-func (r ApiViewrunRequest) Authorization(authorization string) ApiViewrunRequest {
-	r.authorization = &authorization
-	return r
-}
-
-// 
-func (r ApiViewrunRequest) ContentType(contentType string) ApiViewrunRequest {
+func (r ApiViewRunRequest) ContentType(contentType string) ApiViewRunRequest {
 	r.contentType = &contentType
 	return r
 }
 
-func (r ApiViewrunRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ViewrunExecute(r)
+func (r ApiViewRunRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ViewRunExecute(r)
 }
 
 /*
-Viewrun View run
+ViewRun ViewRun
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param runId 
- @return ApiViewrunRequest
+ @return ApiViewRunRequest
 */
-func (a *MiscApiService) Viewrun(ctx context.Context, runId string) ApiViewrunRequest {
-	return ApiViewrunRequest{
+func (a *MiscApiService) ViewRun(ctx context.Context, runId string) ApiViewRunRequest {
+	return ApiViewRunRequest{
 		ApiService: a,
 		ctx: ctx,
 		runId: runId,
@@ -992,14 +896,14 @@ func (a *MiscApiService) Viewrun(ctx context.Context, runId string) ApiViewrunRe
 }
 
 // Execute executes the request
-func (a *MiscApiService) ViewrunExecute(r ApiViewrunRequest) (*http.Response, error) {
+func (a *MiscApiService) ViewRunExecute(r ApiViewRunRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.Viewrun")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MiscApiService.ViewRun")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1010,9 +914,6 @@ func (a *MiscApiService) ViewrunExecute(r ApiViewrunRequest) (*http.Response, er
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return nil, reportError("authorization is required and must be specified")
-	}
 	if r.contentType == nil {
 		return nil, reportError("contentType is required and must be specified")
 	}
@@ -1034,8 +935,21 @@ func (a *MiscApiService) ViewrunExecute(r ApiViewrunRequest) (*http.Response, er
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	parameterAddToHeaderOrQuery(localVarHeaderParams, "Content-Type", r.contentType, "")
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["apiKey"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err

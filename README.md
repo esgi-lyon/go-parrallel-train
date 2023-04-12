@@ -20,3 +20,9 @@ rm -rf api/lobstrio/go.mod api/lobstrio/go.sum
 export LOBSTRIOS_API_TOKEN=your_token
 go run main.go
 ```
+
+## Test
+
+```bash
+go test ./api/lobstrio-facade -v
+```

@@ -22,24 +22,11 @@ func Test_lobstrio_MiscApiService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test MiscApiService Activatetask", func(t *testing.T) {
+	t.Run("Test MiscApiService Createtask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var taskId string
-
-		httpRes, err := apiClient.MiscApi.Activatetask(context.Background(), taskId).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test MiscApiService CreatetaskNotadded", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		httpRes, err := apiClient.MiscApi.CreatetaskNotadded(context.Background()).Execute()
+		httpRes, err := apiClient.MiscApi.Createtask(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
